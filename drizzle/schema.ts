@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { int, json, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -25,4 +25,35 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+// Assessment results table
+export const assessments = mysqlTable("assessments", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").references(() => users.id),
+  sessionId: varchar("sessionId", { length: 64 }).notNull(),
+  totalScore: int("totalScore").notNull(),
+  maxScore: int("maxScore").notNull().default(40),
+  level: varchar("level", { length: 32 }).notNull(),
+  answers: json("answers").notNull(),
+  categoryScores: json("categoryScores").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Assessment = typeof assessments.$inferSelect;
+export type InsertAssessment = typeof assessments.$inferInsert;
+
+// Contact requests table
+export const contactRequests = mysqlTable("contactRequests", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  company: varchar("company", { length: 255 }).notNull(),
+  role: varchar("role", { length: 255 }),
+  interest: varchar("interest", { length: 64 }).notNull(),
+  message: text("message"),
+  status: mysqlEnum("status", ["pending", "contacted", "closed"]).default("pending").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ContactRequest = typeof contactRequests.$inferSelect;
+export type InsertContactRequest = typeof contactRequests.$inferInsert;

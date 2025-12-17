@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, assessments, InsertAssessment, contactRequests, InsertContactRequest } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,67 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Assessment queries
+export async function createAssessment(assessment: InsertAssessment) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot create assessment: database not available");
+    return null;
+  }
+
+  try {
+    const result = await db.insert(assessments).values(assessment);
+    return result[0].insertId;
+  } catch (error) {
+    console.error("[Database] Failed to create assessment:", error);
+    throw error;
+  }
+}
+
+export async function getAssessmentsByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get assessments: database not available");
+    return [];
+  }
+
+  return db.select().from(assessments).where(eq(assessments.userId, userId));
+}
+
+export async function getAssessmentBySessionId(sessionId: string) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get assessment: database not available");
+    return null;
+  }
+
+  const result = await db.select().from(assessments).where(eq(assessments.sessionId, sessionId)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+// Contact request queries
+export async function createContactRequest(request: InsertContactRequest) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot create contact request: database not available");
+    return null;
+  }
+
+  try {
+    const result = await db.insert(contactRequests).values(request);
+    return result[0].insertId;
+  } catch (error) {
+    console.error("[Database] Failed to create contact request:", error);
+    throw error;
+  }
+}
+
+export async function getAllContactRequests() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get contact requests: database not available");
+    return [];
+  }
+
+  return db.select().from(contactRequests);
+}
