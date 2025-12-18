@@ -1,0 +1,76 @@
+# Vercel Ignore File
+# Ces fichiers/dossiers ne seront pas uploadés sur Vercel
+
+# Environment files
+.env
+.env.*
+.env.local
+.env.development
+.env.production
+!.env.example
+
+# Dependencies
+node_modules
+pnpm-lock.yaml
+
+# Testing
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+vitest.config.ts
+coverage
+
+# Development
+.vscode
+.idea
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build artifacts (will be rebuilt by Vercel)
+dist
+.next
+.nuxt
+.cache
+
+# Documentation (optional - keep if you want docs in production)
+*.md
+!README.md
+!VERCEL_DEPLOY.md
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.travis.yml
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+tmp
+temp
+
+# Scripts (sauf si nécessaires en production)
+scripts/*.sh
+
+# Patches
+patches
+
+# Other
+todo.md
