@@ -1,0 +1,48 @@
+# Cloudflare Pages - Fichiers à ignorer lors du déploiement
+
+# Dependencies
+node_modules/
+
+# Server-side code (non utilisé dans Pages statique)
+server/
+api/
+dist/index.js
+
+# Development files
+*.log
+.env*
+!.env.example
+
+# Test files
+*.test.*
+**/__tests__/
+coverage/
+
+# Documentation
+*.md
+!README.md
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# Build artifacts (only dist/public is needed)
+dist/
+!dist/public/
+
+# Scripts
+scripts/
+
+# Config files
+tsconfig*.json
+vite.config.ts
+wrangler.toml
+.wrangler/
+
+# Drizzle
+drizzle/
+drizzle.config.ts

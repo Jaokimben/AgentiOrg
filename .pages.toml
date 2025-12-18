@@ -1,13 +1,15 @@
 # Cloudflare Pages Configuration
-# This file tells Cloudflare to treat this as a static site
+# This file configures a STATIC site deployment (no Workers)
 
+# Project settings
+[project]
+name = "agentiorg"
+compatibility_date = "2024-01-01"
+
+# Build configuration
 [build]
-command = "pnpm build"
-cwd = ""
-watch_dir = ""
+command = "pnpm install && pnpm run pages:build"
+output_directory = "dist/public"
 
-[build.environment]
-NODE_VERSION = "20"
-
-[deploy]
-dir = "dist/public"
+# Environment variables are set in Cloudflare Dashboard
+# DO NOT define them here - they contain secrets

@@ -1,0 +1,4 @@
+# Cloudflare Pages Project
+project_name = "agentiorg"
+deployment_type = "pages"
+# Static site deployment - NO Workers, NO Functions
