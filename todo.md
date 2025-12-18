@@ -41,3 +41,12 @@
 - [ ] Créer un rapport PDF téléchargeable
 - [ ] Ajouter des comparaisons avec les meilleures pratiques
 - [ ] Implémenter un système de scoring avancé
+
+
+## Comparaison avec Benchmarks Sectoriels
+- [x] Definir les benchmarks par secteur d'activite
+- [x] Creer le composant de selection de secteur
+- [x] Implementer la comparaison detaillee par categorie
+- [x] Ajouter les visualisations de comparaison sectorielle
+- [x] Generer des recommandations basees sur le secteur
+- [x] Tester la fonctionnalite de benchmark

@@ -14,6 +14,9 @@ import { HeatmapChart } from "@/components/HeatmapChart";
 import { BenchmarkComparison } from "@/components/BenchmarkComparison";
 import { StrengthsWeaknesses } from "@/components/StrengthsWeaknesses";
 import { DetailedRecommendations } from "@/components/DetailedRecommendations";
+import { SectorSelector } from "@/components/SectorSelector";
+import { SectorComparison } from "@/components/SectorComparison";
+import { SectorRecommendations } from "@/components/SectorRecommendations";
 import { 
   Network, 
   ArrowLeft, 
@@ -28,7 +31,8 @@ import {
   Download,
   Share2,
   RotateCcw,
-  MessageSquare
+  MessageSquare,
+  Globe
 } from "lucide-react";
 
 // Assessment Questions with translation keys
@@ -295,9 +299,19 @@ function Header() {
 // Detailed Results Component
 function DetailedResults({ answers, onRestart }: { answers: Record<number, number>; onRestart: () => void }) {
   const { t, language } = useLanguage();
+  const [selectedSector, setSelectedSector] = useState<string | null>(null);
   const totalScore = Object.values(answers).reduce((sum, val) => sum + val, 0);
   const interpretation = useScoreInterpretation(totalScore);
   const categoryScores = getCategoryScores(answers, t);
+  
+  // Convert category scores to user scores object for sector comparison
+  const userScores: Record<string, number> = {
+    culture: categoryScores.find(c => c.key === 'assessment.category.culture')?.percentage || 0,
+    technology: categoryScores.find(c => c.key === 'assessment.category.tech')?.percentage || 0,
+    governance: categoryScores.find(c => c.key === 'assessment.category.governance')?.percentage || 0,
+    skills: categoryScores.find(c => c.key === 'assessment.category.skills')?.percentage || 0,
+    collaboration: categoryScores.find(c => c.key === 'assessment.category.collaboration')?.percentage || 0
+  };
   
   const saveAssessment = trpc.assessment.save.useMutation({
     onSuccess: () => {
@@ -377,6 +391,24 @@ function DetailedResults({ answers, onRestart }: { answers: Record<number, numbe
       'Positive return on investment'
     ]
   }));
+
+  // If sector is selected, show sector comparison
+  if (selectedSector) {
+    return (
+      <div className="space-y-8">
+        <Button
+          variant="outline"
+          onClick={() => setSelectedSector(null)}
+          className="gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          {language === 'fr' ? 'Retour aux resultats' : 'Back to results'}
+        </Button>
+        <SectorComparison userScores={userScores} sectorId={selectedSector} />
+        <SectorRecommendations userScores={userScores} sectorId={selectedSector} />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -469,6 +501,30 @@ function DetailedResults({ answers, onRestart }: { answers: Record<number, numbe
 
       {/* Detailed Recommendations */}
       <DetailedRecommendations recommendations={detailedRecommendations} language={language as 'fr' | 'en'} />
+
+      {/* Sector Comparison Section */}
+      <Card className="border-2 border-accent/50 bg-gradient-to-r from-accent/5 to-transparent">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-xl text-primary">
+            <Globe className="w-6 h-6 text-accent" />
+            {language === 'fr' ? 'Comparer avec votre secteur' : 'Compare with your sector'}
+          </CardTitle>
+          <CardDescription>
+            {language === 'fr'
+              ? 'Decouvrez comment vous vous positionnez par rapport aux standards de votre industrie'
+              : 'See how you compare against your industry standards'}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button
+            onClick={() => setSelectedSector('tech')}
+            className="bg-gradient-navy hover:opacity-90 gap-2 w-full sm:w-auto"
+          >
+            <Globe className="w-4 h-4" />
+            {language === 'fr' ? 'Selectionner votre secteur' : 'Select your sector'}
+          </Button>
+        </CardContent>
+      </Card>
 
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
