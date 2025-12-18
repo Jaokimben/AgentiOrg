@@ -7,6 +7,9 @@
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
     "build": "vite build && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "vercel-build": "vite build",
+    "pages:build": "vite build",
+    "pages:dev": "wrangler pages dev dist/public --port=3000",
+    "pages:deploy": "pnpm build && wrangler pages deploy dist/public",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
@@ -15,7 +18,8 @@
     "vercel:check": "bash scripts/pre-deploy-check.sh",
     "vercel:deploy": "bash scripts/deploy-to-vercel.sh --prod",
     "vercel:preview": "bash scripts/deploy-to-vercel.sh",
-    "deploy": "bash scripts/deploy-to-vercel.sh --prod"
+    "deploy": "pnpm pages:deploy",
+    "cf:deploy": "pnpm pages:deploy"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.693.0",
