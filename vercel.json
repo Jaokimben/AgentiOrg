@@ -1,20 +1,22 @@
 {
   "version": 2,
   "buildCommand": "pnpm build",
-  "devCommand": "pnpm dev",
   "installCommand": "pnpm install",
-  "framework": null,
-  "outputDirectory": "dist",
-  "functions": {
-    "api/**/*.ts": {
-      "maxDuration": 30,
-      "runtime": "nodejs20.x"
-    }
-  },
-  "rewrites": [
+  "outputDirectory": "dist/public",
+  "builds": [
     {
-      "source": "/api/:path*",
-      "destination": "/api"
+      "src": "dist/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/dist/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/public/$1"
     }
   ],
   "headers": [
