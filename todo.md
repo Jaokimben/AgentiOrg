@@ -23,3 +23,10 @@
 - [x] Schema de base de données pour évaluations
 - [x] API pour sauvegarder les résultats d'évaluation
 - [x] API pour formulaire de contact
+
+## Internationalisation (i18n)
+- [x] Créer le contexte de langue et les fichiers de traduction
+- [x] Traduire la page d'accueil en anglais
+- [x] Traduire la page d'évaluation en anglais
+- [x] Traduire la page de contact en anglais
+- [x] Ajouter un sélecteur de langue dans le header

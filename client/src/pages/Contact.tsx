@@ -8,6 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "wouter";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { 
   Network, 
   ArrowLeft, 
@@ -22,6 +24,8 @@ import {
 
 // Header Component
 function Header() {
+  const { t } = useLanguage();
+  
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
       <div className="container flex items-center justify-between h-16">
@@ -31,12 +35,15 @@ function Header() {
           </div>
           <span className="font-bold text-xl text-primary">AgenticOrg</span>
         </Link>
-        <Link href="/">
-          <Button variant="ghost" className="gap-2">
-            <ArrowLeft className="w-4 h-4" />
-            Retour à l'accueil
-          </Button>
-        </Link>
+        <div className="flex items-center gap-3">
+          <LanguageSelector />
+          <Link href="/">
+            <Button variant="ghost" className="gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              {t("nav.backHome")}
+            </Button>
+          </Link>
+        </div>
       </div>
     </header>
   );
@@ -44,6 +51,7 @@ function Header() {
 
 // Contact Form
 export default function Contact() {
+  const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -66,7 +74,7 @@ export default function Contact() {
     
     // Validation
     if (!formData.name || !formData.email || !formData.company || !formData.interest) {
-      toast.error("Veuillez remplir tous les champs obligatoires");
+      toast.error(t("contact.error.required"));
       return;
     }
     
@@ -82,9 +90,9 @@ export default function Contact() {
         message: formData.message || undefined
       });
       setIsSubmitted(true);
-      toast.success("Votre demande a été envoyée avec succès !");
+      toast.success(t("contact.success.toast"));
     } catch (error) {
-      toast.error("Une erreur est survenue. Veuillez réessayer.");
+      toast.error(t("contact.error.generic"));
     } finally {
       setIsSubmitting(false);
     }
@@ -101,26 +109,25 @@ export default function Contact() {
                 <div className="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-4">
                   <CheckCircle2 className="w-10 h-10 text-green-600" />
                 </div>
-                <CardTitle className="text-2xl text-primary">Demande Envoyée !</CardTitle>
+                <CardTitle className="text-2xl text-primary">{t("contact.success.title")}</CardTitle>
                 <CardDescription className="text-base">
-                  Merci pour votre intérêt. Notre équipe vous contactera dans les 24-48 heures.
+                  {t("contact.success.description")}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  En attendant, vous pouvez explorer notre outil d'évaluation pour 
-                  mieux comprendre la maturité agentique de votre organisation.
+                  {t("contact.success.cta")}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                   <Link href="/">
                     <Button variant="outline" className="gap-2">
                       <ArrowLeft className="w-4 h-4" />
-                      Retour à l'accueil
+                      {t("nav.backHome")}
                     </Button>
                   </Link>
                   <Link href="/evaluation">
                     <Button className="bg-gradient-navy hover:opacity-90">
-                      Faire l'évaluation
+                      {t("contact.success.assessment")}
                     </Button>
                   </Link>
                 </div>
@@ -140,12 +147,11 @@ export default function Contact() {
         <div className="container max-w-5xl">
           <div className="text-center mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-              Demander une Consultation
+              {t("contact.title")}
             </h1>
             <div className="section-divider mx-auto mb-6"></div>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Nos experts vous accompagnent dans votre transformation vers une Organisation Agentique.
-              Remplissez le formulaire ci-dessous pour être contacté.
+              {t("contact.description")}
             </p>
           </div>
           
@@ -154,7 +160,7 @@ export default function Contact() {
             <div className="lg:col-span-1 space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg text-primary">Pourquoi nous contacter ?</CardTitle>
+                  <CardTitle className="text-lg text-primary">{t("contact.whyTitle")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-start gap-3">
@@ -162,8 +168,8 @@ export default function Contact() {
                       <CheckCircle2 className="w-4 h-4 text-accent" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-foreground">Diagnostic personnalisé</h4>
-                      <p className="text-sm text-muted-foreground">Analyse approfondie de votre organisation</p>
+                      <h4 className="font-medium text-foreground">{t("contact.reason1.title")}</h4>
+                      <p className="text-sm text-muted-foreground">{t("contact.reason1.description")}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -171,8 +177,8 @@ export default function Contact() {
                       <CheckCircle2 className="w-4 h-4 text-accent" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-foreground">Feuille de route</h4>
-                      <p className="text-sm text-muted-foreground">Plan d'action adapté à vos objectifs</p>
+                      <h4 className="font-medium text-foreground">{t("contact.reason2.title")}</h4>
+                      <p className="text-sm text-muted-foreground">{t("contact.reason2.description")}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -180,8 +186,8 @@ export default function Contact() {
                       <CheckCircle2 className="w-4 h-4 text-accent" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-foreground">Accompagnement expert</h4>
-                      <p className="text-sm text-muted-foreground">Support continu dans votre transformation</p>
+                      <h4 className="font-medium text-foreground">{t("contact.reason3.title")}</h4>
+                      <p className="text-sm text-muted-foreground">{t("contact.reason3.description")}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -189,10 +195,9 @@ export default function Contact() {
               
               <Card className="bg-gradient-navy text-white">
                 <CardContent className="pt-6">
-                  <h3 className="font-bold text-lg mb-4">Réponse rapide garantie</h3>
+                  <h3 className="font-bold text-lg mb-4">{t("contact.guarantee.title")}</h3>
                   <p className="text-white/80 text-sm">
-                    Notre équipe s'engage à vous répondre dans les 24-48 heures ouvrées 
-                    pour planifier un premier échange.
+                    {t("contact.guarantee.description")}
                   </p>
                 </CardContent>
               </Card>
@@ -201,9 +206,9 @@ export default function Contact() {
             {/* Contact Form */}
             <Card className="lg:col-span-2">
               <CardHeader>
-                <CardTitle className="text-xl text-primary">Formulaire de Contact</CardTitle>
+                <CardTitle className="text-xl text-primary">{t("contact.form.title")}</CardTitle>
                 <CardDescription>
-                  Tous les champs marqués d'un * sont obligatoires
+                  {t("contact.form.required")}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -212,11 +217,11 @@ export default function Contact() {
                     <div className="space-y-2">
                       <Label htmlFor="name" className="flex items-center gap-2">
                         <User className="w-4 h-4" />
-                        Nom complet *
+                        {t("contact.form.name")} *
                       </Label>
                       <Input
                         id="name"
-                        placeholder="Jean Dupont"
+                        placeholder={t("contact.form.namePlaceholder")}
                         value={formData.name}
                         onChange={(e) => handleChange("name", e.target.value)}
                         required
@@ -225,12 +230,12 @@ export default function Contact() {
                     <div className="space-y-2">
                       <Label htmlFor="email" className="flex items-center gap-2">
                         <Mail className="w-4 h-4" />
-                        Email professionnel *
+                        {t("contact.form.email")} *
                       </Label>
                       <Input
                         id="email"
                         type="email"
-                        placeholder="jean.dupont@entreprise.com"
+                        placeholder={t("contact.form.emailPlaceholder")}
                         value={formData.email}
                         onChange={(e) => handleChange("email", e.target.value)}
                         required
@@ -242,21 +247,21 @@ export default function Contact() {
                     <div className="space-y-2">
                       <Label htmlFor="company" className="flex items-center gap-2">
                         <Building2 className="w-4 h-4" />
-                        Entreprise *
+                        {t("contact.form.company")} *
                       </Label>
                       <Input
                         id="company"
-                        placeholder="Nom de votre entreprise"
+                        placeholder={t("contact.form.companyPlaceholder")}
                         value={formData.company}
                         onChange={(e) => handleChange("company", e.target.value)}
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="role">Fonction</Label>
+                      <Label htmlFor="role">{t("contact.form.role")}</Label>
                       <Input
                         id="role"
-                        placeholder="Directeur / Manager / etc."
+                        placeholder={t("contact.form.rolePlaceholder")}
                         value={formData.role}
                         onChange={(e) => handleChange("role", e.target.value)}
                       />
@@ -264,21 +269,21 @@ export default function Contact() {
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="interest">Sujet d'intérêt *</Label>
+                    <Label htmlFor="interest">{t("contact.form.interest")} *</Label>
                     <Select
                       value={formData.interest}
                       onValueChange={(value) => handleChange("interest", value)}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Sélectionnez un sujet" />
+                        <SelectValue placeholder={t("contact.form.selectSubject")} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="diagnostic">Diagnostic de maturité agentique</SelectItem>
-                        <SelectItem value="strategy">Stratégie de transformation</SelectItem>
-                        <SelectItem value="mao">Mise en place d'une MAO</SelectItem>
-                        <SelectItem value="governance">Gouvernance IA</SelectItem>
-                        <SelectItem value="training">Formation des équipes</SelectItem>
-                        <SelectItem value="other">Autre</SelectItem>
+                        <SelectItem value="diagnostic">{t("contact.form.interest.diagnostic")}</SelectItem>
+                        <SelectItem value="strategy">{t("contact.form.interest.strategy")}</SelectItem>
+                        <SelectItem value="mao">{t("contact.form.interest.mao")}</SelectItem>
+                        <SelectItem value="governance">{t("contact.form.interest.governance")}</SelectItem>
+                        <SelectItem value="training">{t("contact.form.interest.training")}</SelectItem>
+                        <SelectItem value="other">{t("contact.form.interest.other")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -286,11 +291,11 @@ export default function Contact() {
                   <div className="space-y-2">
                     <Label htmlFor="message" className="flex items-center gap-2">
                       <MessageSquare className="w-4 h-4" />
-                      Message
+                      {t("contact.form.message")}
                     </Label>
                     <Textarea
                       id="message"
-                      placeholder="Décrivez brièvement votre projet ou vos questions..."
+                      placeholder={t("contact.form.messagePlaceholder")}
                       rows={4}
                       value={formData.message}
                       onChange={(e) => handleChange("message", e.target.value)}
@@ -305,12 +310,12 @@ export default function Contact() {
                     {isSubmitting ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        Envoi en cours...
+                        {t("contact.form.sending")}
                       </>
                     ) : (
                       <>
                         <Send className="w-4 h-4" />
-                        Envoyer ma demande
+                        {t("contact.form.submit")}
                       </>
                     )}
                   </Button>

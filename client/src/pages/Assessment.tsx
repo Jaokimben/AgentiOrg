@@ -7,12 +7,13 @@ import { Progress } from "@/components/ui/progress";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { 
   Network, 
   ArrowLeft, 
   ArrowRight, 
   CheckCircle2,
-  AlertCircle,
   TrendingUp,
   Target,
   Users,
@@ -21,208 +22,234 @@ import {
   Layers
 } from "lucide-react";
 
-// Assessment Questions
+// Assessment Questions with translation keys
 const assessmentQuestions = [
   {
     id: 1,
-    category: "Culture Organisationnelle",
+    categoryKey: "assessment.category.culture",
     icon: Users,
-    question: "Comment votre organisation perçoit-elle l'intelligence artificielle ?",
+    questionKey: "assessment.q1",
     options: [
-      { value: 1, label: "Comme une menace pour l'emploi" },
-      { value: 2, label: "Comme un outil technique parmi d'autres" },
-      { value: 3, label: "Comme un partenaire potentiel pour améliorer la productivité" },
-      { value: 4, label: "Comme un collaborateur stratégique pour la transformation" }
+      { value: 1, labelKey: "assessment.q1.o1" },
+      { value: 2, labelKey: "assessment.q1.o2" },
+      { value: 3, labelKey: "assessment.q1.o3" },
+      { value: 4, labelKey: "assessment.q1.o4" }
     ]
   },
   {
     id: 2,
-    category: "Culture Organisationnelle",
+    categoryKey: "assessment.category.culture",
     icon: Users,
-    question: "Quel est le niveau d'ouverture au changement dans votre organisation ?",
+    questionKey: "assessment.q2",
     options: [
-      { value: 1, label: "Résistance forte au changement" },
-      { value: 2, label: "Acceptation passive des changements imposés" },
-      { value: 3, label: "Adaptation proactive aux nouvelles méthodes" },
-      { value: 4, label: "Culture d'innovation et d'expérimentation continue" }
+      { value: 1, labelKey: "assessment.q2.o1" },
+      { value: 2, labelKey: "assessment.q2.o2" },
+      { value: 3, labelKey: "assessment.q2.o3" },
+      { value: 4, labelKey: "assessment.q2.o4" }
     ]
   },
   {
     id: 3,
-    category: "Infrastructure Technologique",
+    categoryKey: "assessment.category.tech",
     icon: Layers,
-    question: "Quel est l'état de votre infrastructure technologique actuelle ?",
+    questionKey: "assessment.q3",
     options: [
-      { value: 1, label: "Systèmes legacy isolés et peu intégrés" },
-      { value: 2, label: "Infrastructure partiellement modernisée" },
-      { value: 3, label: "Infrastructure cloud avec APIs et intégrations" },
-      { value: 4, label: "Architecture moderne, scalable et prête pour l'IA" }
+      { value: 1, labelKey: "assessment.q3.o1" },
+      { value: 2, labelKey: "assessment.q3.o2" },
+      { value: 3, labelKey: "assessment.q3.o3" },
+      { value: 4, labelKey: "assessment.q3.o4" }
     ]
   },
   {
     id: 4,
-    category: "Infrastructure Technologique",
+    categoryKey: "assessment.category.tech",
     icon: Layers,
-    question: "Comment gérez-vous vos données organisationnelles ?",
+    questionKey: "assessment.q4",
     options: [
-      { value: 1, label: "Données dispersées et non structurées" },
-      { value: 2, label: "Quelques bases de données centralisées" },
-      { value: 3, label: "Data warehouse avec gouvernance de base" },
-      { value: 4, label: "Data platform unifiée avec gouvernance mature" }
+      { value: 1, labelKey: "assessment.q4.o1" },
+      { value: 2, labelKey: "assessment.q4.o2" },
+      { value: 3, labelKey: "assessment.q4.o3" },
+      { value: 4, labelKey: "assessment.q4.o4" }
     ]
   },
   {
     id: 5,
-    category: "Gouvernance",
+    categoryKey: "assessment.category.governance",
     icon: Shield,
-    question: "Avez-vous des politiques de gouvernance pour l'IA ?",
+    questionKey: "assessment.q5",
     options: [
-      { value: 1, label: "Aucune politique en place" },
-      { value: 2, label: "Quelques directives informelles" },
-      { value: 3, label: "Politiques documentées en cours de déploiement" },
-      { value: 4, label: "Framework de gouvernance IA complet et appliqué" }
+      { value: 1, labelKey: "assessment.q5.o1" },
+      { value: 2, labelKey: "assessment.q5.o2" },
+      { value: 3, labelKey: "assessment.q5.o3" },
+      { value: 4, labelKey: "assessment.q5.o4" }
     ]
   },
   {
     id: 6,
-    category: "Gouvernance",
+    categoryKey: "assessment.category.governance",
     icon: Shield,
-    question: "Comment sont prises les décisions stratégiques dans votre organisation ?",
+    questionKey: "assessment.q6",
     options: [
-      { value: 1, label: "Décisions centralisées au sommet uniquement" },
-      { value: 2, label: "Délégation limitée avec validation hiérarchique" },
-      { value: 3, label: "Décisions distribuées avec cadre de gouvernance" },
-      { value: 4, label: "Prise de décision adaptative basée sur les compétences" }
+      { value: 1, labelKey: "assessment.q6.o1" },
+      { value: 2, labelKey: "assessment.q6.o2" },
+      { value: 3, labelKey: "assessment.q6.o3" },
+      { value: 4, labelKey: "assessment.q6.o4" }
     ]
   },
   {
     id: 7,
-    category: "Compétences",
+    categoryKey: "assessment.category.skills",
     icon: Brain,
-    question: "Quel est le niveau de compétences IA dans votre organisation ?",
+    questionKey: "assessment.q7",
     options: [
-      { value: 1, label: "Très peu de compétences IA disponibles" },
-      { value: 2, label: "Quelques experts isolés" },
-      { value: 3, label: "Équipes IA dédiées et programmes de formation" },
-      { value: 4, label: "Compétences IA intégrées à tous les niveaux" }
+      { value: 1, labelKey: "assessment.q7.o1" },
+      { value: 2, labelKey: "assessment.q7.o2" },
+      { value: 3, labelKey: "assessment.q7.o3" },
+      { value: 4, labelKey: "assessment.q7.o4" }
     ]
   },
   {
     id: 8,
-    category: "Compétences",
+    categoryKey: "assessment.category.skills",
     icon: Brain,
-    question: "Comment développez-vous les compétences humaniques (créativité, empathie, jugement) ?",
+    questionKey: "assessment.q8",
     options: [
-      { value: 1, label: "Pas de focus particulier sur ces compétences" },
-      { value: 2, label: "Formations ponctuelles disponibles" },
-      { value: 3, label: "Programmes structurés de développement" },
-      { value: 4, label: "Culture d'apprentissage continu et valorisation explicite" }
+      { value: 1, labelKey: "assessment.q8.o1" },
+      { value: 2, labelKey: "assessment.q8.o2" },
+      { value: 3, labelKey: "assessment.q8.o3" },
+      { value: 4, labelKey: "assessment.q8.o4" }
     ]
   },
   {
     id: 9,
-    category: "Collaboration",
+    categoryKey: "assessment.category.collaboration",
     icon: Target,
-    question: "Comment collaborent actuellement vos équipes avec des outils IA ?",
+    questionKey: "assessment.q9",
     options: [
-      { value: 1, label: "Utilisation minimale ou inexistante" },
-      { value: 2, label: "Utilisation individuelle et non coordonnée" },
-      { value: 3, label: "Processus définis pour certaines tâches" },
-      { value: 4, label: "Collaboration Humain-IA intégrée aux workflows" }
+      { value: 1, labelKey: "assessment.q9.o1" },
+      { value: 2, labelKey: "assessment.q9.o2" },
+      { value: 3, labelKey: "assessment.q9.o3" },
+      { value: 4, labelKey: "assessment.q9.o4" }
     ]
   },
   {
     id: 10,
-    category: "Collaboration",
+    categoryKey: "assessment.category.collaboration",
     icon: Target,
-    question: "Avez-vous expérimenté des projets pilotes impliquant l'IA ?",
+    questionKey: "assessment.q10",
     options: [
-      { value: 1, label: "Aucun projet pilote" },
-      { value: 2, label: "Quelques expérimentations isolées" },
-      { value: 3, label: "Projets pilotes structurés avec retours d'expérience" },
-      { value: 4, label: "Programme d'innovation continue avec scaling des succès" }
+      { value: 1, labelKey: "assessment.q10.o1" },
+      { value: 2, labelKey: "assessment.q10.o2" },
+      { value: 3, labelKey: "assessment.q10.o3" },
+      { value: 4, labelKey: "assessment.q10.o4" }
     ]
   }
 ];
 
 // Score interpretation
-function getScoreInterpretation(score: number) {
+function useScoreInterpretation(score: number) {
+  const { t, language } = useLanguage();
   const percentage = (score / 40) * 100;
   
   if (percentage < 25) {
     return {
-      level: "Débutant",
+      level: t("assessment.level.beginner"),
+      levelKey: "beginner",
       color: "text-red-600",
       bgColor: "bg-red-100",
-      description: "Votre organisation est au début de son parcours vers la transformation agentique. Des fondations importantes doivent être établies.",
-      recommendations: [
+      description: t("assessment.level.beginner.description"),
+      recommendations: language === "fr" ? [
         "Commencer par sensibiliser la direction aux opportunités de l'IA",
         "Évaluer et moderniser l'infrastructure technologique",
         "Développer une vision stratégique pour l'intégration de l'IA",
         "Former les équipes aux concepts de base de l'IA"
+      ] : [
+        "Start by raising management awareness of AI opportunities",
+        "Evaluate and modernize technological infrastructure",
+        "Develop a strategic vision for AI integration",
+        "Train teams on basic AI concepts"
       ]
     };
   } else if (percentage < 50) {
     return {
-      level: "Émergent",
+      level: t("assessment.level.emerging"),
+      levelKey: "emerging",
       color: "text-orange-600",
       bgColor: "bg-orange-100",
-      description: "Votre organisation a commencé sa transformation mais doit renforcer ses fondations pour progresser efficacement.",
-      recommendations: [
+      description: t("assessment.level.emerging.description"),
+      recommendations: language === "fr" ? [
         "Établir un cadre de gouvernance IA formel",
         "Lancer des projets pilotes structurés",
         "Investir dans le développement des compétences",
         "Améliorer l'intégration des données"
+      ] : [
+        "Establish a formal AI governance framework",
+        "Launch structured pilot projects",
+        "Invest in skills development",
+        "Improve data integration"
       ]
     };
   } else if (percentage < 75) {
     return {
-      level: "En Progression",
+      level: t("assessment.level.progressing"),
+      levelKey: "progressing",
       color: "text-yellow-600",
       bgColor: "bg-yellow-100",
-      description: "Votre organisation progresse bien vers la maturité agentique. Focus sur l'expansion et l'optimisation.",
-      recommendations: [
+      description: t("assessment.level.progressing.description"),
+      recommendations: language === "fr" ? [
         "Considérer la mise en place d'une MAO",
         "Étendre les pratiques de collaboration Humain-IA",
         "Renforcer la gouvernance multi-niveaux",
         "Développer les compétences humaniques"
+      ] : [
+        "Consider implementing a MAO",
+        "Extend Human-AI collaboration practices",
+        "Strengthen multi-level governance",
+        "Develop humanic skills"
       ]
     };
   } else {
     return {
-      level: "Avancé",
+      level: t("assessment.level.advanced"),
+      levelKey: "advanced",
       color: "text-green-600",
       bgColor: "bg-green-100",
-      description: "Votre organisation est bien positionnée pour une transformation agentique complète.",
-      recommendations: [
+      description: t("assessment.level.advanced.description"),
+      recommendations: language === "fr" ? [
         "Déployer le modèle d'Organisation Agentique à grande échelle",
         "Optimiser les modes de collaboration Humain-IA",
         "Devenir un leader d'opinion dans votre secteur",
         "Partager vos apprentissages et meilleures pratiques"
+      ] : [
+        "Deploy the Agentic Organization model at scale",
+        "Optimize Human-AI collaboration modes",
+        "Become a thought leader in your industry",
+        "Share your learnings and best practices"
       ]
     };
   }
 }
 
 // Category scores
-function getCategoryScores(answers: Record<number, number>) {
-  const categories = {
-    "Culture Organisationnelle": { total: 0, count: 0, max: 8 },
-    "Infrastructure Technologique": { total: 0, count: 0, max: 8 },
-    "Gouvernance": { total: 0, count: 0, max: 8 },
-    "Compétences": { total: 0, count: 0, max: 8 },
-    "Collaboration": { total: 0, count: 0, max: 8 }
+function getCategoryScores(answers: Record<number, number>, t: (key: string) => string) {
+  const categories: Record<string, { total: number; count: number; max: number }> = {
+    "assessment.category.culture": { total: 0, count: 0, max: 8 },
+    "assessment.category.tech": { total: 0, count: 0, max: 8 },
+    "assessment.category.governance": { total: 0, count: 0, max: 8 },
+    "assessment.category.skills": { total: 0, count: 0, max: 8 },
+    "assessment.category.collaboration": { total: 0, count: 0, max: 8 }
   };
   
   assessmentQuestions.forEach(q => {
     if (answers[q.id]) {
-      categories[q.category as keyof typeof categories].total += answers[q.id];
-      categories[q.category as keyof typeof categories].count += 1;
+      categories[q.categoryKey].total += answers[q.id];
+      categories[q.categoryKey].count += 1;
     }
   });
   
-  return Object.entries(categories).map(([name, data]) => ({
-    name,
+  return Object.entries(categories).map(([key, data]) => ({
+    key,
+    name: t(key),
     score: data.total,
     max: data.max,
     percentage: Math.round((data.total / data.max) * 100)
@@ -231,6 +258,8 @@ function getCategoryScores(answers: Record<number, number>) {
 
 // Header Component
 function Header() {
+  const { t } = useLanguage();
+  
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
       <div className="container flex items-center justify-between h-16">
@@ -240,12 +269,15 @@ function Header() {
           </div>
           <span className="font-bold text-xl text-primary">AgenticOrg</span>
         </Link>
-        <Link href="/">
-          <Button variant="ghost" className="gap-2">
-            <ArrowLeft className="w-4 h-4" />
-            Retour à l'accueil
-          </Button>
-        </Link>
+        <div className="flex items-center gap-3">
+          <LanguageSelector />
+          <Link href="/">
+            <Button variant="ghost" className="gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              {t("nav.backHome")}
+            </Button>
+          </Link>
+        </div>
       </div>
     </header>
   );
@@ -253,13 +285,14 @@ function Header() {
 
 // Results Component
 function Results({ answers, onRestart }: { answers: Record<number, number>; onRestart: () => void }) {
+  const { t } = useLanguage();
   const totalScore = Object.values(answers).reduce((sum, val) => sum + val, 0);
-  const interpretation = getScoreInterpretation(totalScore);
-  const categoryScores = getCategoryScores(answers);
+  const interpretation = useScoreInterpretation(totalScore);
+  const categoryScores = getCategoryScores(answers, t);
   
   const saveAssessment = trpc.assessment.save.useMutation({
     onSuccess: () => {
-      toast.success("Résultats sauvegardés avec succès");
+      toast.success(t("assessment.saved"));
     },
     onError: () => {
       // Silent fail - results are still shown to user
@@ -271,7 +304,7 @@ function Results({ answers, onRestart }: { answers: Record<number, number>; onRe
     saveAssessment.mutate({
       answers,
       totalScore,
-      level: interpretation.level,
+      level: interpretation.levelKey,
       categoryScores
     });
   }, []);
@@ -281,15 +314,15 @@ function Results({ answers, onRestart }: { answers: Record<number, number>; onRe
       {/* Overall Score */}
       <Card className="border-2 border-accent">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl text-primary">Résultats de votre Évaluation</CardTitle>
-          <CardDescription>Score global de maturité agentique</CardDescription>
+          <CardTitle className="text-2xl text-primary">{t("assessment.results.title")}</CardTitle>
+          <CardDescription>{t("assessment.results.subtitle")}</CardDescription>
         </CardHeader>
         <CardContent className="text-center">
           <div className="mb-6">
             <div className="text-6xl font-bold text-primary mb-2">{totalScore}/40</div>
             <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${interpretation.bgColor}`}>
               <span className={`font-semibold ${interpretation.color}`}>
-                Niveau : {interpretation.level}
+                {t("assessment.results.level")} : {interpretation.level}
               </span>
             </div>
           </div>
@@ -303,13 +336,13 @@ function Results({ answers, onRestart }: { answers: Record<number, number>; onRe
       {/* Category Breakdown */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl text-primary">Analyse par Catégorie</CardTitle>
-          <CardDescription>Détail de votre maturité dans chaque domaine</CardDescription>
+          <CardTitle className="text-xl text-primary">{t("assessment.results.categoryTitle")}</CardTitle>
+          <CardDescription>{t("assessment.results.categorySubtitle")}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
             {categoryScores.map((cat) => (
-              <div key={cat.name}>
+              <div key={cat.key}>
                 <div className="flex justify-between mb-2">
                   <span className="font-medium text-foreground">{cat.name}</span>
                   <span className="text-muted-foreground">{cat.score}/{cat.max}</span>
@@ -326,9 +359,9 @@ function Results({ answers, onRestart }: { answers: Record<number, number>; onRe
         <CardHeader>
           <CardTitle className="text-xl text-primary flex items-center gap-2">
             <TrendingUp className="w-6 h-6 text-accent" />
-            Recommandations Personnalisées
+            {t("assessment.results.recommendationsTitle")}
           </CardTitle>
-          <CardDescription>Actions prioritaires pour votre transformation</CardDescription>
+          <CardDescription>{t("assessment.results.recommendationsSubtitle")}</CardDescription>
         </CardHeader>
         <CardContent>
           <ul className="space-y-4">
@@ -348,11 +381,11 @@ function Results({ answers, onRestart }: { answers: Record<number, number>; onRe
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Button onClick={onRestart} variant="outline" className="gap-2">
           <ArrowLeft className="w-4 h-4" />
-          Refaire l'évaluation
+          {t("assessment.results.restart")}
         </Button>
         <Link href="/contact">
           <Button className="bg-gradient-navy hover:opacity-90 gap-2">
-            Demander une consultation
+            {t("assessment.results.consultation")}
             <ArrowRight className="w-4 h-4" />
           </Button>
         </Link>
@@ -363,6 +396,7 @@ function Results({ answers, onRestart }: { answers: Record<number, number>; onRe
 
 // Main Assessment Page
 export default function Assessment() {
+  const { t } = useLanguage();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResults, setShowResults] = useState(false);
@@ -410,8 +444,8 @@ export default function Assessment() {
               {/* Progress */}
               <div className="mb-8">
                 <div className="flex justify-between text-sm text-muted-foreground mb-2">
-                  <span>Question {currentQuestion + 1} sur {assessmentQuestions.length}</span>
-                  <span>{Math.round(progress)}% complété</span>
+                  <span>{t("assessment.question")} {currentQuestion + 1} {t("assessment.of")} {assessmentQuestions.length}</span>
+                  <span>{Math.round(progress)}% {t("assessment.completed")}</span>
                 </div>
                 <Progress value={progress} className="h-2" />
               </div>
@@ -423,9 +457,9 @@ export default function Assessment() {
                     <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center">
                       <question.icon className="w-6 h-6 text-primary" />
                     </div>
-                    <span className="text-sm font-semibold text-accent">{question.category}</span>
+                    <span className="text-sm font-semibold text-accent">{t(question.categoryKey)}</span>
                   </div>
-                  <CardTitle className="text-xl text-primary">{question.question}</CardTitle>
+                  <CardTitle className="text-xl text-primary">{t(question.questionKey)}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <RadioGroup
@@ -441,10 +475,11 @@ export default function Assessment() {
                             ? "border-accent bg-accent/10"
                             : "border-border hover:border-accent/50"
                         }`}
+                        onClick={() => handleAnswer(option.value.toString())}
                       >
                         <RadioGroupItem value={option.value.toString()} id={`option-${option.value}`} />
                         <Label htmlFor={`option-${option.value}`} className="flex-1 cursor-pointer">
-                          {option.label}
+                          {t(option.labelKey)}
                         </Label>
                       </div>
                     ))}
@@ -461,14 +496,14 @@ export default function Assessment() {
                   className="gap-2"
                 >
                   <ArrowLeft className="w-4 h-4" />
-                  Précédent
+                  {t("assessment.previous")}
                 </Button>
                 <Button
                   onClick={handleNext}
                   disabled={!canProceed}
                   className="bg-gradient-navy hover:opacity-90 gap-2"
                 >
-                  {isLastQuestion ? "Voir les résultats" : "Suivant"}
+                  {isLastQuestion ? t("assessment.seeResults") : t("assessment.next")}
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </div>
