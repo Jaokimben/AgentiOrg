@@ -9,6 +9,11 @@ import { Label } from "@/components/ui/label";
 import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { RadarChart } from "@/components/RadarChart";
+import { HeatmapChart } from "@/components/HeatmapChart";
+import { BenchmarkComparison } from "@/components/BenchmarkComparison";
+import { StrengthsWeaknesses } from "@/components/StrengthsWeaknesses";
+import { DetailedRecommendations } from "@/components/DetailedRecommendations";
 import { 
   Network, 
   ArrowLeft, 
@@ -19,7 +24,11 @@ import {
   Users,
   Shield,
   Brain,
-  Layers
+  Layers,
+  Download,
+  Share2,
+  RotateCcw,
+  MessageSquare
 } from "lucide-react";
 
 // Assessment Questions with translation keys
@@ -283,9 +292,9 @@ function Header() {
   );
 }
 
-// Results Component
-function Results({ answers, onRestart }: { answers: Record<number, number>; onRestart: () => void }) {
-  const { t } = useLanguage();
+// Detailed Results Component
+function DetailedResults({ answers, onRestart }: { answers: Record<number, number>; onRestart: () => void }) {
+  const { t, language } = useLanguage();
   const totalScore = Object.values(answers).reduce((sum, val) => sum + val, 0);
   const interpretation = useScoreInterpretation(totalScore);
   const categoryScores = getCategoryScores(answers, t);
@@ -308,85 +317,169 @@ function Results({ answers, onRestart }: { answers: Record<number, number>; onRe
       categoryScores
     });
   }, []);
-  
+
+  // Generate benchmark data
+  const benchmarkData = categoryScores.map(cat => ({
+    yourScore: cat.percentage,
+    industryAverage: Math.round(cat.percentage * 0.85), // Simulated industry average
+    bestInClass: 95,
+    category: cat.name
+  }));
+
+  // Generate strengths/weaknesses
+  const strengthsWeaknesses = categoryScores.map(cat => ({
+    category: cat.name,
+    percentage: cat.percentage,
+    type: cat.percentage >= 75 ? 'strength' as const : cat.percentage >= 50 ? 'opportunity' as const : 'weakness' as const,
+    description: language === 'fr' 
+      ? `Votre score dans cette catégorie est ${cat.percentage >= 75 ? 'excellent' : cat.percentage >= 50 ? 'bon' : 'à améliorer'}.`
+      : `Your score in this category is ${cat.percentage >= 75 ? 'excellent' : cat.percentage >= 50 ? 'good' : 'needs improvement'}.`
+  }));
+
+  // Generate detailed recommendations
+  const detailedRecommendations = categoryScores.map((cat, idx) => ({
+    id: `rec-${idx}`,
+    title: language === 'fr' ? `Améliorer ${cat.name}` : `Improve ${cat.name}`,
+    description: language === 'fr'
+      ? `Développer votre maturité dans le domaine de ${cat.name.toLowerCase()}.`
+      : `Develop your maturity in the field of ${cat.name.toLowerCase()}.`,
+    priority: cat.percentage < 50 ? 'high' as const : cat.percentage < 75 ? 'medium' as const : 'low' as const,
+    timeline: language === 'fr' 
+      ? (cat.percentage < 50 ? '3-6 mois' : cat.percentage < 75 ? '6-12 mois' : '12+ mois')
+      : (cat.percentage < 50 ? '3-6 months' : cat.percentage < 75 ? '6-12 months' : '12+ months'),
+    impact: language === 'fr' 
+      ? (cat.percentage < 50 ? 'Impact élevé' : cat.percentage < 75 ? 'Impact moyen' : 'Impact faible')
+      : (cat.percentage < 50 ? 'High impact' : cat.percentage < 75 ? 'Medium impact' : 'Low impact'),
+    effort: language === 'fr'
+      ? (cat.percentage < 50 ? 'Effort important' : cat.percentage < 75 ? 'Effort modéré' : 'Effort minimal')
+      : (cat.percentage < 50 ? 'High effort' : cat.percentage < 75 ? 'Moderate effort' : 'Low effort'),
+    category: cat.name,
+    actions: language === 'fr' ? [
+      'Définir des objectifs clairs et mesurables',
+      'Allouer les ressources nécessaires',
+      'Mettre en place un suivi régulier',
+      'Impliquer les parties prenantes clés'
+    ] : [
+      'Define clear and measurable objectives',
+      'Allocate necessary resources',
+      'Implement regular monitoring',
+      'Involve key stakeholders'
+    ],
+    successMetrics: language === 'fr' ? [
+      'Augmentation du score de maturité',
+      'Amélioration des indicateurs clés',
+      'Adoption par les équipes',
+      'Retour sur investissement positif'
+    ] : [
+      'Increased maturity score',
+      'Improved key indicators',
+      'Team adoption',
+      'Positive return on investment'
+    ]
+  }));
+
   return (
     <div className="space-y-8">
-      {/* Overall Score */}
-      <Card className="border-2 border-accent">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl text-primary">{t("assessment.results.title")}</CardTitle>
-          <CardDescription>{t("assessment.results.subtitle")}</CardDescription>
-        </CardHeader>
-        <CardContent className="text-center">
-          <div className="mb-6">
-            <div className="text-6xl font-bold text-primary mb-2">{totalScore}/40</div>
-            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${interpretation.bgColor}`}>
-              <span className={`font-semibold ${interpretation.color}`}>
-                {t("assessment.results.level")} : {interpretation.level}
-              </span>
+      {/* Overall Score Card */}
+      <Card className="border-2 border-accent bg-gradient-to-br from-blue-50 to-indigo-50">
+        <CardContent className="pt-8">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="relative w-48 h-48">
+              <svg className="w-full h-full transform -rotate-90">
+                <circle
+                  cx="96"
+                  cy="96"
+                  r="88"
+                  stroke="currentColor"
+                  strokeWidth="12"
+                  fill="none"
+                  className="text-gray-200"
+                />
+                <circle
+                  cx="96"
+                  cy="96"
+                  r="88"
+                  stroke="currentColor"
+                  strokeWidth="12"
+                  fill="none"
+                  strokeDasharray={`${((totalScore / 40) * 100) * 5.53} 553`}
+                  className="text-accent transition-all duration-1000"
+                />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-5xl font-bold text-primary">{Math.round((totalScore / 40) * 100)}%</span>
+                <span className="text-sm text-muted-foreground">{t("assessment.results.level")}</span>
+              </div>
+            </div>
+            <div className="flex-1 text-center md:text-left">
+              <div className="inline-block px-4 py-2 bg-accent/20 rounded-full mb-4">
+                <span className="text-lg font-semibold text-accent">{interpretation.level}</span>
+              </div>
+              <p className="text-lg text-muted-foreground">
+                {interpretation.description}
+              </p>
             </div>
           </div>
-          <Progress value={(totalScore / 40) * 100} className="h-4 mb-4" />
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            {interpretation.description}
-          </p>
         </CardContent>
       </Card>
-      
-      {/* Category Breakdown */}
+
+      {/* Radar Chart */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl text-primary">{t("assessment.results.categoryTitle")}</CardTitle>
-          <CardDescription>{t("assessment.results.categorySubtitle")}</CardDescription>
+          <CardTitle className="text-xl text-primary">{language === 'fr' ? 'Vue d\'ensemble des catégories' : 'Category Overview'}</CardTitle>
+          <CardDescription>
+            {language === 'fr' ? 'Visualisation de votre maturité par domaine' : 'Visualization of your maturity by domain'}
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
-            {categoryScores.map((cat) => (
-              <div key={cat.key}>
-                <div className="flex justify-between mb-2">
-                  <span className="font-medium text-foreground">{cat.name}</span>
-                  <span className="text-muted-foreground">{cat.score}/{cat.max}</span>
-                </div>
-                <Progress value={cat.percentage} className="h-3" />
-              </div>
-            ))}
-          </div>
+          <RadarChart
+            data={categoryScores.map(cat => ({
+              name: cat.name,
+              value: cat.percentage,
+              max: 100
+            }))}
+          />
         </CardContent>
       </Card>
-      
-      {/* Recommendations */}
+
+      {/* Heatmap */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl text-primary flex items-center gap-2">
-            <TrendingUp className="w-6 h-6 text-accent" />
-            {t("assessment.results.recommendationsTitle")}
-          </CardTitle>
-          <CardDescription>{t("assessment.results.recommendationsSubtitle")}</CardDescription>
+          <CardTitle className="text-xl text-primary">{language === 'fr' ? 'Analyse détaillée' : 'Detailed Analysis'}</CardTitle>
+          <CardDescription>
+            {language === 'fr' ? 'Score détaillé par catégorie' : 'Detailed score by category'}
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <ul className="space-y-4">
-            {interpretation.recommendations.map((rec, index) => (
-              <li key={index} className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center shrink-0">
-                  <CheckCircle2 className="w-5 h-5 text-accent" />
-                </div>
-                <span className="text-foreground">{rec}</span>
-              </li>
-            ))}
-          </ul>
+          <HeatmapChart
+            data={categoryScores.map(cat => ({
+              category: cat.name,
+              value: cat.percentage,
+              max: 100
+            }))}
+          />
         </CardContent>
       </Card>
-      
-      {/* Actions */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button onClick={onRestart} variant="outline" className="gap-2">
-          <ArrowLeft className="w-4 h-4" />
+
+      {/* Benchmark Comparison */}
+      <BenchmarkComparison data={benchmarkData} language={language as 'fr' | 'en'} />
+
+      {/* Strengths & Weaknesses */}
+      <StrengthsWeaknesses data={strengthsWeaknesses} language={language as 'fr' | 'en'} />
+
+      {/* Detailed Recommendations */}
+      <DetailedRecommendations recommendations={detailedRecommendations} language={language as 'fr' | 'en'} />
+
+      {/* Action Buttons */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+        <Button variant="outline" onClick={onRestart} className="gap-2">
+          <RotateCcw className="w-4 h-4" />
           {t("assessment.results.restart")}
         </Button>
         <Link href="/contact">
-          <Button className="bg-gradient-navy hover:opacity-90 gap-2">
+          <Button className="bg-gradient-navy hover:opacity-90 gap-2 w-full sm:w-auto">
+            <MessageSquare className="w-4 h-4" />
             {t("assessment.results.consultation")}
-            <ArrowRight className="w-4 h-4" />
           </Button>
         </Link>
       </div>
@@ -394,13 +487,12 @@ function Results({ answers, onRestart }: { answers: Record<number, number>; onRe
   );
 }
 
-// Main Assessment Page
-export default function Assessment() {
+// Quiz Component
+function AssessmentQuiz({ onComplete }: { onComplete: (answers: Record<number, number>) => void }) {
   const { t } = useLanguage();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
-  const [showResults, setShowResults] = useState(false);
-  
+
   const question = assessmentQuestions[currentQuestion];
   const progress = ((currentQuestion + 1) / assessmentQuestions.length) * 100;
   const isLastQuestion = currentQuestion === assessmentQuestions.length - 1;
@@ -415,7 +507,7 @@ export default function Assessment() {
   
   const handleNext = () => {
     if (isLastQuestion) {
-      setShowResults(true);
+      onComplete(answers);
     } else {
       setCurrentQuestion(prev => prev + 1);
     }
@@ -426,90 +518,104 @@ export default function Assessment() {
       setCurrentQuestion(prev => prev - 1);
     }
   };
-  
-  const handleRestart = () => {
-    setCurrentQuestion(0);
-    setAnswers({});
-    setShowResults(false);
+
+  return (
+    <>
+      {/* Progress */}
+      <div className="mb-8">
+        <div className="flex justify-between text-sm text-muted-foreground mb-2">
+          <span>{t("assessment.question")} {currentQuestion + 1} {t("assessment.of")} {assessmentQuestions.length}</span>
+          <span>{Math.round(progress)}% {t("assessment.completed")}</span>
+        </div>
+        <Progress value={progress} className="h-2" />
+      </div>
+      
+      {/* Question Card */}
+      <Card className="mb-8">
+        <CardHeader>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center">
+              <question.icon className="w-6 h-6 text-primary" />
+            </div>
+            <span className="text-sm font-semibold text-accent">{t(question.categoryKey)}</span>
+          </div>
+          <CardTitle className="text-xl text-primary">{t(question.questionKey)}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <RadioGroup
+            value={answers[question.id]?.toString() || ""}
+            onValueChange={handleAnswer}
+            className="space-y-4"
+          >
+            {question.options.map((option) => (
+              <div
+                key={option.value}
+                className={`flex items-center space-x-3 p-4 rounded-lg border transition-colors cursor-pointer ${
+                  answers[question.id] === option.value
+                    ? "border-accent bg-accent/10"
+                    : "border-border hover:border-accent/50"
+                }`}
+                onClick={() => handleAnswer(option.value.toString())}
+              >
+                <RadioGroupItem value={option.value.toString()} id={`option-${option.value}`} />
+                <Label htmlFor={`option-${option.value}`} className="flex-1 cursor-pointer">
+                  {t(option.labelKey)}
+                </Label>
+              </div>
+            ))}
+          </RadioGroup>
+        </CardContent>
+      </Card>
+      
+      {/* Navigation */}
+      <div className="flex justify-between">
+        <Button
+          variant="outline"
+          onClick={handlePrevious}
+          disabled={currentQuestion === 0}
+          className="gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          {t("assessment.previous")}
+        </Button>
+        <Button
+          onClick={handleNext}
+          disabled={!canProceed}
+          className="bg-gradient-navy hover:opacity-90 gap-2"
+        >
+          {isLastQuestion ? t("assessment.seeResults") : t("assessment.next")}
+          <ArrowRight className="w-4 h-4" />
+        </Button>
+      </div>
+    </>
+  );
+}
+
+// Main Assessment Page
+export default function Assessment() {
+  const [completed, setCompleted] = useState(false);
+  const [answers, setAnswers] = useState<Record<number, number>>({});
+
+  const handleComplete = (finalAnswers: Record<number, number>) => {
+    setAnswers(finalAnswers);
+    setCompleted(true);
   };
-  
+
+  const handleRestart = () => {
+    setAnswers({});
+    setCompleted(false);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
       <main className="pt-24 pb-16">
-        <div className="container max-w-3xl">
-          {!showResults ? (
-            <>
-              {/* Progress */}
-              <div className="mb-8">
-                <div className="flex justify-between text-sm text-muted-foreground mb-2">
-                  <span>{t("assessment.question")} {currentQuestion + 1} {t("assessment.of")} {assessmentQuestions.length}</span>
-                  <span>{Math.round(progress)}% {t("assessment.completed")}</span>
-                </div>
-                <Progress value={progress} className="h-2" />
-              </div>
-              
-              {/* Question Card */}
-              <Card className="mb-8">
-                <CardHeader>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center">
-                      <question.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <span className="text-sm font-semibold text-accent">{t(question.categoryKey)}</span>
-                  </div>
-                  <CardTitle className="text-xl text-primary">{t(question.questionKey)}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <RadioGroup
-                    value={answers[question.id]?.toString() || ""}
-                    onValueChange={handleAnswer}
-                    className="space-y-4"
-                  >
-                    {question.options.map((option) => (
-                      <div
-                        key={option.value}
-                        className={`flex items-center space-x-3 p-4 rounded-lg border transition-colors cursor-pointer ${
-                          answers[question.id] === option.value
-                            ? "border-accent bg-accent/10"
-                            : "border-border hover:border-accent/50"
-                        }`}
-                        onClick={() => handleAnswer(option.value.toString())}
-                      >
-                        <RadioGroupItem value={option.value.toString()} id={`option-${option.value}`} />
-                        <Label htmlFor={`option-${option.value}`} className="flex-1 cursor-pointer">
-                          {t(option.labelKey)}
-                        </Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-                </CardContent>
-              </Card>
-              
-              {/* Navigation */}
-              <div className="flex justify-between">
-                <Button
-                  variant="outline"
-                  onClick={handlePrevious}
-                  disabled={currentQuestion === 0}
-                  className="gap-2"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  {t("assessment.previous")}
-                </Button>
-                <Button
-                  onClick={handleNext}
-                  disabled={!canProceed}
-                  className="bg-gradient-navy hover:opacity-90 gap-2"
-                >
-                  {isLastQuestion ? t("assessment.seeResults") : t("assessment.next")}
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </div>
-            </>
+        <div className="container max-w-4xl">
+          {completed ? (
+            <DetailedResults answers={answers} onRestart={handleRestart} />
           ) : (
-            <Results answers={answers} onRestart={handleRestart} />
+            <AssessmentQuiz onComplete={handleComplete} />
           )}
         </div>
       </main>

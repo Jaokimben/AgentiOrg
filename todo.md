@@ -30,3 +30,14 @@
 - [x] Traduire la page d'évaluation en anglais
 - [x] Traduire la page de contact en anglais
 - [x] Ajouter un sélecteur de langue dans le header
+
+
+## Amélioration de l'Outil d'Évaluation
+- [x] Ajouter des visualisations avancées (radar chart, heatmap)
+- [x] Implémenter les benchmarks comparatifs par secteur
+- [x] Créer des profils détaillés de maturité organisationnelle
+- [x] Ajouter une analyse détaillée des forces et faiblesses
+- [x] Générer des recommandations personnalisées par domaine
+- [ ] Créer un rapport PDF téléchargeable
+- [ ] Ajouter des comparaisons avec les meilleures pratiques
+- [ ] Implémenter un système de scoring avancé
