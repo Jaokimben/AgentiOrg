@@ -1,0 +1,3 @@
+# Ignore everything - this is a Pages project, not a Workers project
+*
+!dist/public

@@ -1,0 +1,13 @@
+# Cloudflare Pages Configuration
+# This file tells Cloudflare to treat this as a static site
+
+[build]
+command = "pnpm build"
+cwd = ""
+watch_dir = ""
+
+[build.environment]
+NODE_VERSION = "20"
+
+[deploy]
+dir = "dist/public"
