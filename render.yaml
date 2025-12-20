@@ -1,0 +1,52 @@
+# Render Configuration pour AgentiOrg
+# Ce fichier configure automatiquement le déploiement sur Render
+
+services:
+  # Static Site pour le frontend React
+  - type: web
+    name: agentiorg
+    env: static
+    buildCommand: pnpm install && pnpm run pages:build
+    staticPublishPath: dist/public
+    pullRequestPreviewsEnabled: true
+    
+    # Variables d'environnement
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      
+      # À ajouter manuellement dans Render Dashboard :
+      # DATABASE_URL (de type Secret)
+      # JWT_SECRET (de type Secret)
+      # VITE_APP_ID
+      # OAUTH_SERVER_URL
+      # VITE_OAUTH_PORTAL_URL
+      # BUILT_IN_FORGE_API_URL
+      # BUILT_IN_FORGE_API_KEY (de type Secret)
+      # VITE_FRONTEND_FORGE_API_URL
+      # VITE_FRONTEND_FORGE_API_KEY (de type Secret)
+      # OWNER_OPEN_ID
+      # OWNER_NAME
+      # VITE_ANALYTICS_ENDPOINT (optionnel)
+      # VITE_ANALYTICS_WEBSITE_ID (optionnel)
+    
+    # Headers de sécurité
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-XSS-Protection
+        value: 1; mode=block
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+    
+    # Routes (SPA - toutes les routes vers index.html)
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
