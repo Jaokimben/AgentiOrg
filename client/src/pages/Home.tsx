@@ -33,6 +33,9 @@ function Header() {
           <span className="font-bold text-xl text-primary">AgenticOrg</span>
         </Link>
         <nav className="hidden md:flex items-center gap-8">
+          <Link href="/about">
+            <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">{t("nav.about")}</span>
+          </Link>
           <a href="#concepts" className="text-muted-foreground hover:text-primary transition-colors">{t("nav.concepts")}</a>
           <a href="#governance" className="text-muted-foreground hover:text-primary transition-colors">{t("nav.governance")}</a>
           <a href="#implementation" className="text-muted-foreground hover:text-primary transition-colors">{t("nav.implementation")}</a>

@@ -9,11 +9,13 @@ import Home from "./pages/Home";
 import Assessment from "./pages/Assessment";
 import Contact from "./pages/Contact";
 import SectorComparisonPage from "./pages/SectorComparisonPage";
+import About from "./pages/About";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/about" component={About} />
       <Route path="/evaluation" component={Assessment} />
       <Route path="/comparison" component={SectorComparisonPage} />
       <Route path="/contact" component={Contact} />

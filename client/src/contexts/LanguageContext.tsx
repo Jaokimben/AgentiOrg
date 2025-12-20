@@ -13,6 +13,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 // French translations
 const fr = {
   // Header
+  "nav.about": "À Propos",
   "nav.concepts": "Concepts",
   "nav.governance": "Gouvernance",
   "nav.implementation": "Implémentation",
@@ -279,6 +280,7 @@ const fr = {
 // English translations
 const en: typeof fr = {
   // Header
+  "nav.about": "About",
   "nav.concepts": "Concepts",
   "nav.governance": "Governance",
   "nav.implementation": "Implementation",
