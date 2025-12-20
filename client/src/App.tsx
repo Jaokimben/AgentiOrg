@@ -8,12 +8,14 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import Home from "./pages/Home";
 import Assessment from "./pages/Assessment";
 import Contact from "./pages/Contact";
+import SectorComparisonPage from "./pages/SectorComparisonPage";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/evaluation" component={Assessment} />
+      <Route path="/comparison" component={SectorComparisonPage} />
       <Route path="/contact" component={Contact} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />

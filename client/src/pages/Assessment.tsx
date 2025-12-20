@@ -516,13 +516,12 @@ function DetailedResults({ answers, onRestart }: { answers: Record<number, numbe
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Button
-            onClick={() => setSelectedSector('tech')}
-            className="bg-gradient-navy hover:opacity-90 gap-2 w-full sm:w-auto"
-          >
-            <Globe className="w-4 h-4" />
-            {language === 'fr' ? 'Selectionner votre secteur' : 'Select your sector'}
-          </Button>
+          <Link href="/comparison">
+            <Button className="bg-gradient-navy hover:opacity-90 gap-2 w-full sm:w-auto">
+              <Globe className="w-4 h-4" />
+              {language === 'fr' ? 'Selectionner votre secteur' : 'Select your sector'}
+            </Button>
+          </Link>
         </CardContent>
       </Card>
 
