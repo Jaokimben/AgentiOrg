@@ -19,7 +19,8 @@ import {
   AlertTriangle,
   CheckCircle2,
   ArrowRight,
-  Globe
+  Globe,
+  Handshake
 } from "lucide-react";
 
 // Header Component
@@ -310,9 +311,122 @@ function ProblemStatementSection() {
   );
 }
 
-// Evolution Section
-function EvolutionSection() {
+// Comparison Table Section
+function ComparisonTableSection() {
   const { language } = useLanguage();
+  
+  const comparisonData = [
+    {
+      aspect: language === 'fr' ? 'Structure' : 'Structure',
+      traditional: language === 'fr' ? 'Lignes hiérarchiques fixes' : 'Fixed reporting lines',
+      agentic: language === 'fr' ? 'Réseau dynamique basé sur les compétences' : 'Dynamic competency-based network'
+    },
+    {
+      aspect: language === 'fr' ? 'Prise de décision' : 'Decision-making',
+      traditional: language === 'fr' ? 'Centralisée' : 'Centralized',
+      agentic: language === 'fr' ? 'Distribuée / Contextuelle' : 'Distributed / Contextual'
+    },
+    {
+      aspect: language === 'fr' ? 'Flux d\'information' : 'Information Flow',
+      traditional: language === 'fr' ? 'Linéaire / Goulots d\'étranglement' : 'Linear / Bottlenecked',
+      agentic: language === 'fr' ? 'Réseau / Parallèle' : 'Networked / Parallel'
+    },
+    {
+      aspect: language === 'fr' ? 'Évolutivité' : 'Scalability',
+      traditional: language === 'fr' ? 'Limitée par la capacité humaine' : 'Limited by human capacity',
+      agentic: language === 'fr' ? 'Scaling hybride IA-Humain' : 'AI-human hybrid scaling'
+    },
+    {
+      aspect: language === 'fr' ? 'Autonomie' : 'Autonomy',
+      traditional: language === 'fr' ? 'Contrôle hiérarchique strict' : 'Strict hierarchical control',
+      agentic: language === 'fr' ? 'Autonomie contextuelle guidée' : 'Contextual guided autonomy'
+    }
+  ];
+  
+  return (
+    <section className="py-20 bg-background">
+      <div className="container max-w-6xl">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+            {language === 'fr' 
+              ? 'Hiérarchie Traditionnelle vs Réseau Agentique' 
+              : 'Traditional Hierarchy vs Agentic Network'}
+          </h2>
+          <div className="section-divider mx-auto mb-6"></div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            {language === 'fr'
+              ? 'Changement de paradigme fondamental dans la structure organisationnelle'
+              : 'Fundamental paradigm shift in organizational structure'}
+          </p>
+        </div>
+        
+        <Card className="overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-secondary">
+                <tr>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-primary">
+                    {language === 'fr' ? 'Aspect' : 'Aspect'}
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-orange-600">
+                    {language === 'fr' ? 'Hiérarchie Traditionnelle' : 'Traditional Hierarchy'}
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-green-600">
+                    {language === 'fr' ? 'Réseau Agentique' : 'Agentic Network'}
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {comparisonData.map((row, index) => (
+                  <tr key={index} className="hover:bg-secondary/50 transition-colors">
+                    <td className="px-6 py-4 text-sm font-medium text-primary">{row.aspect}</td>
+                    <td className="px-6 py-4 text-sm text-muted-foreground">{row.traditional}</td>
+                    <td className="px-6 py-4 text-sm text-foreground font-medium">{row.agentic}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+// Four Characteristics Section
+function CharacteristicsSection() {
+  const { language } = useLanguage();
+  
+  const characteristics = [
+    {
+      icon: Target,
+      title: language === 'fr' ? 'Autonomie' : 'Autonomy',
+      description: language === 'fr'
+        ? 'Capacité de prendre des décisions de manière indépendante basée sur des objectifs et contraintes définis.'
+        : 'Capability to make decisions independently based on defined goals and constraints.'
+    },
+    {
+      icon: TrendingUp,
+      title: language === 'fr' ? 'Réactivité' : 'Reactivity',
+      description: language === 'fr'
+        ? 'Réponse rapide aux changements environnementaux et adaptation en temps réel aux nouvelles conditions.'
+        : 'Quick response to environmental changes and real-time adaptation to new conditions.'
+    },
+    {
+      icon: Lightbulb,
+      title: language === 'fr' ? 'Proactivité' : 'Proactiveness',
+      description: language === 'fr'
+        ? 'Prise d\'initiative pour poursuivre des objectifs et anticiper les besoins futurs de manière proactive.'
+        : 'Taking initiative to pursue goals and proactively anticipate future needs.'
+    },
+    {
+      icon: Handshake,
+      title: language === 'fr' ? 'Capacité Sociale' : 'Social Ability',
+      description: language === 'fr'
+        ? 'Interaction efficace avec les humains et autres agents pour atteindre des objectifs collaboratifs.'
+        : 'Effective interaction with humans and other agents to achieve collaborative goals.'
+    }
+  ];
   
   return (
     <section className="py-20 bg-secondary">
@@ -320,75 +434,54 @@ function EvolutionSection() {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
             {language === 'fr' 
-              ? 'Évolution vers l\'Enterprise 5.0' 
-              : 'Evolution toward Enterprise 5.0'}
+              ? 'Quatre Caractéristiques Définitoires' 
+              : 'Four Defining Characteristics'}
           </h2>
           <div className="section-divider mx-auto mb-6"></div>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             {language === 'fr'
-              ? 'Des hiérarchies traditionnelles aux réseaux agentiques : un bond évolutif au-delà de l\'Industrie 4.0'
-              : 'From traditional hierarchies to agentic networks: an evolutionary leap beyond Industry 4.0'}
+              ? 'Les capacités fondamentales qui transforment l\'IA en participant organisationnel'
+              : 'Core capabilities that transform AI into an organizational participant'}
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8">
-          {/* Pillar 1 */}
-          <Card className="border-2 border-accent/30">
-            <CardHeader>
-              <div className="w-12 h-12 bg-gradient-navy rounded-lg flex items-center justify-center mb-4">
-                <Users className="w-6 h-6 text-white" />
-              </div>
-              <CardTitle className="text-xl text-primary">
-                {language === 'fr' ? 'Orientation Humaine' : 'Human Orientation'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                {language === 'fr'
-                  ? 'L\'IA augmente les capacités humaines au lieu de les remplacer, créant une synergie entre intelligence humaine et artificielle.'
-                  : 'AI augments human capabilities rather than replacing them, creating synergy between human and artificial intelligence.'}
-              </p>
-            </CardContent>
-          </Card>
-          
-          {/* Pillar 2 */}
-          <Card className="border-2 border-accent/30">
-            <CardHeader>
-              <div className="w-12 h-12 bg-gradient-navy rounded-lg flex items-center justify-center mb-4">
-                <Shield className="w-6 h-6 text-white" />
-              </div>
-              <CardTitle className="text-xl text-primary">
-                {language === 'fr' ? 'Résilience & Flexibilité' : 'Resilience & Flexibility'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                {language === 'fr'
-                  ? 'Modèles opérationnels auto-optimisants et résistants aux perturbations, capables de s\'adapter rapidement aux changements.'
-                  : 'Self-optimizing and disruption-resilient operating models, capable of rapidly adapting to changes.'}
-              </p>
-            </CardContent>
-          </Card>
-          
-          {/* Pillar 3 */}
-          <Card className="border-2 border-accent/30">
-            <CardHeader>
-              <div className="w-12 h-12 bg-gradient-navy rounded-lg flex items-center justify-center mb-4">
-                <Target className="w-6 h-6 text-white" />
-              </div>
-              <CardTitle className="text-xl text-primary">
-                {language === 'fr' ? 'Durabilité & Éthique' : 'Sustainability & Ethics'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                {language === 'fr'
-                  ? 'Contribution à des objectifs sociétaux plus larges tout en créant de la valeur organisationnelle durable.'
-                  : 'Contributing to broader societal goals while creating sustainable organizational value.'}
-              </p>
-            </CardContent>
-          </Card>
+        <div className="grid md:grid-cols-2 gap-6">
+          {characteristics.map((char, index) => (
+            <Card key={index} className="border-2 border-accent/20 hover:border-accent/50 transition-all">
+              <CardHeader>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center">
+                    <char.icon className="w-6 h-6 text-accent" />
+                  </div>
+                  <CardTitle className="text-xl text-primary">{char.title}</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">{char.description}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
+        
+        <Card className="mt-12 border-2 border-blue-500/30 bg-blue-50/50">
+          <CardContent className="p-6">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center shrink-0">
+                <GitBranch className="w-6 h-6 text-blue-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-primary mb-2">
+                  {language === 'fr' ? 'Enterprise 5.0' : 'Enterprise 5.0'}
+                </h3>
+                <p className="text-muted-foreground">
+                  {language === 'fr'
+                    ? 'Un bond évolutif au-delà de l\'Industrie 4.0, mettant l\'accent sur l\'amplification humaine, la résilience et l\'IA éthique. Trois piliers : orientation humaine, flexibilité opérationnelle, et contribution sociétale durable.'
+                    : 'An evolutionary leap beyond Industry 4.0, emphasizing human amplification, resilience, and ethical AI. Three pillars: human orientation, operational flexibility, and sustainable societal contribution.'}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </section>
   );
@@ -443,8 +536,9 @@ export default function About() {
         <HeroSection />
         <AbstractSection />
         <KeyConceptsSection />
+        <ComparisonTableSection />
+        <CharacteristicsSection />
         <ProblemStatementSection />
-        <EvolutionSection />
         <CTASection />
       </main>
     </div>
