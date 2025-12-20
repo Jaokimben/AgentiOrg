@@ -1,0 +1,66 @@
+# Render - Fichiers à ignorer lors du déploiement
+
+# Development
+node_modules/
+.env*
+!.env.example
+
+# Git
+.git/
+.gitignore
+
+# Build artifacts non nécessaires
+dist/index.js
+dist/*.map
+
+# Tests
+*.test.*
+*.spec.*
+**/__tests__/
+coverage/
+
+# Documentation (sauf README)
+*.md
+!README.md
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary
+*.tmp
+*.temp
+.cache/
+
+# Scripts de déploiement non utilisés
+scripts/deploy-to-vercel.sh
+scripts/pre-deploy-check.sh
+
+# Configurations des autres plateformes
+.vercel/
+.vercelignore
+.cloudflare
+.cfignore
+wrangler.toml
+netlify.toml
+firebase.json
+vercel.json
+
+# Server code (Static Site uniquement)
+server/
+
+# Drizzle
+drizzle/

@@ -18,7 +18,10 @@
     "vercel:check": "bash scripts/pre-deploy-check.sh",
     "vercel:deploy": "bash scripts/deploy-to-vercel.sh --prod",
     "vercel:preview": "bash scripts/deploy-to-vercel.sh",
-    "deploy": "echo 'Deploy via Cloudflare Dashboard: https://dash.cloudflare.com'",
+    "render:build": "pnpm install && pnpm run pages:build",
+    "render:check": "bash scripts/render-check.sh",
+    "render:deploy": "echo 'Deploy via Render Dashboard: https://render.com/dashboard'",
+    "deploy": "pnpm run render:build",
     "cf:deploy": "echo 'Deploy via Cloudflare Dashboard: https://dash.cloudflare.com'"
   },
   "dependencies": {
