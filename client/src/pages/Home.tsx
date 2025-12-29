@@ -1,7 +1,45 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, TrendingUp, Home, DollarSign, PieChart } from "lucide-react";
+import { ArrowRight, TrendingUp, Home, DollarSign, PieChart, BarChart3 } from "lucide-react";
+import { useState } from "react";
 
 export default function HomePage() {
+  const [selectedNeighborhood, setSelectedNeighborhood] = useState("campoamor");
+
+  const neighborhoods = {
+    campoamor: {
+      name: "Campoamor",
+      pricePerM2: 2100,
+      rentPerM2: 11.5,
+      description: "Quartier résidentiel moderne avec excellente accessibilité",
+      color: "amber",
+      colorClass: "bg-amber-50 border-l-amber-700",
+      accentColor: "text-amber-700",
+      buyPrice: 147000,
+      monthlyBuyCost: 770,
+      monthlyRent: 805,
+      rentalYield: 6.57,
+      growth: "2% par an",
+      prestige: "Élevé"
+    },
+    sananton: {
+      name: "San Antón",
+      pricePerM2: 2100,
+      rentPerM2: 10.5,
+      description: "Quartier résidentiel abordable avec fort potentiel de croissance",
+      color: "blue",
+      colorClass: "bg-blue-50 border-l-blue-700",
+      accentColor: "text-blue-700",
+      buyPrice: 147000,
+      monthlyBuyCost: 740,
+      monthlyRent: 735,
+      rentalYield: 6.35,
+      growth: "2.5% par an",
+      prestige: "Modéré"
+    }
+  };
+
+  const current = neighborhoods[selectedNeighborhood as keyof typeof neighborhoods];
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -35,7 +73,7 @@ export default function HomePage() {
               Analyse Immobilière Alicante
             </h2>
             <p className="text-xl text-gray-100 mb-8">
-              Comparez les coûts d'achat et de location pour des appartements de 65-75 m² dans le quartier de Campoamor
+              Comparez les coûts d'achat et de location pour des appartements de 65-75 m² dans les meilleurs quartiers
             </p>
             <div className="flex gap-4">
               <Button 
@@ -51,50 +89,80 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Neighborhood Selector */}
+      <section className="container py-12 border-b border-gray-200">
+        <h3 className="text-2xl font-bold text-gray-900 mb-6">Sélectionnez un Quartier</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Object.entries(neighborhoods).map(([key, neighborhood]) => (
+            <button
+              key={key}
+              onClick={() => setSelectedNeighborhood(key)}
+              className={`p-6 rounded-lg border-2 transition-all ${
+                selectedNeighborhood === key
+                  ? neighborhood.color === "amber"
+                    ? "border-amber-700 bg-amber-50"
+                    : "border-blue-700 bg-blue-50"
+                  : "border-gray-200 bg-white hover:border-gray-300"
+              }`}
+            >
+              <div className="text-left">
+                <h4 className="text-xl font-bold text-gray-900 mb-2">{neighborhood.name}</h4>
+                <p className="text-gray-600 text-sm mb-4">{neighborhood.description}</p>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-700"><strong>Achat:</strong> {neighborhood.pricePerM2} €/m²</span>
+                  <span className="text-gray-700"><strong>Location:</strong> {neighborhood.rentPerM2} €/m²</span>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
+
       {/* Key Metrics */}
       <section className="container py-16">
+        <h3 className="text-2xl font-bold text-gray-900 mb-8">Métriques Clés - {current.name}</h3>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="p-6 border-l-4 border-l-amber-700 bg-white rounded-lg shadow-sm">
+          <div className={`p-6 border-l-4 ${current.colorClass} bg-white rounded-lg shadow-sm`}>
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-gray-600 text-sm mb-2">Prix Moyen Achat</p>
-                <p className="text-3xl font-bold text-gray-900">147 000 €</p>
-                <p className="text-sm text-amber-700 mt-2 font-accent">Pour 70 m²</p>
+                <p className="text-3xl font-bold text-gray-900">{current.buyPrice.toLocaleString()} €</p>
+                <p className={`text-sm ${current.accentColor} mt-2 font-accent`}>Pour 70 m²</p>
               </div>
-              <Home className="w-8 h-8 text-amber-700 opacity-20" />
+              <Home className={`w-8 h-8 ${current.accentColor} opacity-20`} />
             </div>
           </div>
 
-          <div className="p-6 border-l-4 border-l-blue-700 bg-white rounded-lg shadow-sm">
+          <div className={`p-6 border-l-4 ${current.colorClass} bg-white rounded-lg shadow-sm`}>
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-gray-600 text-sm mb-2">Loyer Mensuel</p>
-                <p className="text-3xl font-bold text-gray-900">805 €</p>
-                <p className="text-sm text-blue-700 mt-2 font-accent">Estimation</p>
+                <p className="text-3xl font-bold text-gray-900">{current.monthlyRent} €</p>
+                <p className={`text-sm ${current.accentColor} mt-2 font-accent`}>Estimation</p>
               </div>
-              <DollarSign className="w-8 h-8 text-blue-700 opacity-20" />
+              <DollarSign className={`w-8 h-8 ${current.accentColor} opacity-20`} />
             </div>
           </div>
 
-          <div className="p-6 border-l-4 border-l-amber-700 bg-white rounded-lg shadow-sm">
+          <div className={`p-6 border-l-4 ${current.colorClass} bg-white rounded-lg shadow-sm`}>
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-gray-600 text-sm mb-2">Coût Mensuel Achat</p>
-                <p className="text-3xl font-bold text-gray-900">770 €</p>
-                <p className="text-sm text-amber-700 mt-2 font-accent">Prêt + Charges</p>
+                <p className="text-3xl font-bold text-gray-900">{current.monthlyBuyCost} €</p>
+                <p className={`text-sm ${current.accentColor} mt-2 font-accent`}>Prêt + Charges</p>
               </div>
-              <TrendingUp className="w-8 h-8 text-amber-700 opacity-20" />
+              <TrendingUp className={`w-8 h-8 ${current.accentColor} opacity-20`} />
             </div>
           </div>
 
-          <div className="p-6 border-l-4 border-l-blue-700 bg-white rounded-lg shadow-sm">
+          <div className={`p-6 border-l-4 ${current.colorClass} bg-white rounded-lg shadow-sm`}>
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-gray-600 text-sm mb-2">Rendement Locatif</p>
-                <p className="text-3xl font-bold text-gray-900">6.57 %</p>
-                <p className="text-sm text-blue-700 mt-2 font-accent">Rendement Brut</p>
+                <p className="text-3xl font-bold text-gray-900">{current.rentalYield} %</p>
+                <p className={`text-sm ${current.accentColor} mt-2 font-accent`}>Rendement Brut</p>
               </div>
-              <PieChart className="w-8 h-8 text-blue-700 opacity-20" />
+              <PieChart className={`w-8 h-8 ${current.accentColor} opacity-20`} />
             </div>
           </div>
         </div>
@@ -111,34 +179,34 @@ export default function HomePage() {
               Achat vs. Location
             </h3>
             <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-              Notre analyse comparative révèle que l'achat d'un appartement de 70 m² à Campoamor est légèrement plus économique que la location sur une base mensuelle. Cependant, l'avantage principal réside dans la création de patrimoine à long terme.
+              Notre analyse comparative pour {current.name} révèle que l'achat d'un appartement de 70 m² est légèrement plus économique que la location sur une base mensuelle. Cependant, l'avantage principal réside dans la création de patrimoine à long terme.
             </p>
             <div className="space-y-4">
               <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-                  <span className="text-amber-700 font-bold">1</span>
+                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
+                  <span className={`${current.accentColor} font-bold`}>1</span>
                 </div>
                 <div>
                   <h4 className="font-accent text-gray-900 mb-1">Économies Mensuelles</h4>
-                  <p className="text-gray-600">L'achat coûte 50 € de moins par mois que la location</p>
+                  <p className="text-gray-600">L'achat coûte {current.monthlyRent - current.monthlyBuyCost} € de moins par mois que la location</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                  <span className="text-blue-700 font-bold">2</span>
+                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
+                  <span className={`${current.accentColor} font-bold`}>2</span>
                 </div>
                 <div>
                   <h4 className="font-accent text-gray-900 mb-1">Patrimoine Net</h4>
-                  <p className="text-gray-600">52 910 € de patrimoine créé en 10 ans</p>
+                  <p className="text-gray-600">~50 000 € de patrimoine créé en 10 ans</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-                  <span className="text-amber-700 font-bold">3</span>
+                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
+                  <span className={`${current.accentColor} font-bold`}>3</span>
                 </div>
                 <div>
                   <h4 className="font-accent text-gray-900 mb-1">Marché Dynamique</h4>
-                  <p className="text-gray-600">Campoamor connaît une appréciation de 2% par an</p>
+                  <p className="text-gray-600">{current.name} connaît une appréciation de {current.growth}</p>
                 </div>
               </div>
             </div>
@@ -147,13 +215,13 @@ export default function HomePage() {
           <div className="relative">
             <img 
               src="/images/campoamor_neighborhood.jpg" 
-              alt="Quartier Campoamor" 
+              alt={current.name}
               className="w-full rounded-lg shadow-lg"
             />
-            <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-lg shadow-xl border-l-4 border-l-amber-700 max-w-xs">
-              <p className="text-sm text-gray-600 mb-2">Quartier Campoamor</p>
-              <p className="text-2xl font-bold text-gray-900">2 100 €/m²</p>
-              <p className="text-xs text-amber-700 mt-2 font-accent">Prix moyen fin 2025</p>
+            <div className={`absolute -bottom-6 -right-6 bg-white p-6 rounded-lg shadow-xl border-l-4 ${current.colorClass} max-w-xs`}>
+              <p className="text-sm text-gray-600 mb-2">Quartier {current.name}</p>
+              <p className="text-2xl font-bold text-gray-900">{current.pricePerM2} €/m²</p>
+              <p className={`text-xs ${current.accentColor} mt-2 font-accent`}>Prix moyen fin 2025</p>
             </div>
           </div>
         </div>
@@ -178,23 +246,23 @@ export default function HomePage() {
             <div className="space-y-4">
               <div className="flex justify-between items-center pb-4 border-b border-gray-200">
                 <span className="text-gray-700">Prix Total (70 m²)</span>
-                <span className="font-bold text-gray-900">166 110 €</span>
+                <span className="font-bold text-gray-900">{current.buyPrice.toLocaleString()} €</span>
               </div>
               <div className="flex justify-between items-center pb-4 border-b border-gray-200">
                 <span className="text-gray-700">Apport Nécessaire (20%)</span>
-                <span className="font-bold text-gray-900">33 222 €</span>
+                <span className="font-bold text-gray-900">{(current.buyPrice * 0.2).toLocaleString()} €</span>
               </div>
               <div className="flex justify-between items-center pb-4 border-b border-gray-200">
                 <span className="text-gray-700">Mensualité Prêt (25 ans, 3.5%)</span>
-                <span className="font-bold text-gray-900">665 €</span>
+                <span className="font-bold text-gray-900">~665 €</span>
               </div>
               <div className="flex justify-between items-center pb-4 border-b border-gray-200">
                 <span className="text-gray-700">Charges Mensuelles</span>
-                <span className="font-bold text-gray-900">105 €</span>
+                <span className="font-bold text-gray-900">~105 €</span>
               </div>
               <div className="flex justify-between items-center pt-4 bg-amber-50 -mx-8 px-8 py-4 rounded-b-lg">
                 <span className="font-accent text-gray-900">Coût Total Mensuel</span>
-                <span className="text-2xl font-bold text-amber-700">770 €</span>
+                <span className="text-2xl font-bold text-amber-700">{current.monthlyBuyCost} €</span>
               </div>
             </div>
           </div>
@@ -207,8 +275,8 @@ export default function HomePage() {
             </h4>
             <div className="space-y-4">
               <div className="flex justify-between items-center pb-4 border-b border-gray-200">
-                <span className="text-gray-700">Loyer Mensuel (11.5 €/m²)</span>
-                <span className="font-bold text-gray-900">805 €</span>
+                <span className="text-gray-700">Loyer Mensuel ({current.rentPerM2} €/m²)</span>
+                <span className="font-bold text-gray-900">{current.monthlyRent} €</span>
               </div>
               <div className="flex justify-between items-center pb-4 border-b border-gray-200">
                 <span className="text-gray-700">Assurance Locataire</span>
@@ -224,10 +292,69 @@ export default function HomePage() {
               </div>
               <div className="flex justify-between items-center pt-4 bg-blue-50 -mx-8 px-8 py-4 rounded-b-lg">
                 <span className="font-accent text-gray-900">Coût Total Mensuel</span>
-                <span className="text-2xl font-bold text-blue-700">820 €</span>
+                <span className="text-2xl font-bold text-blue-700">{current.monthlyRent + 15} €</span>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-amber-700 to-transparent my-16"></div>
+
+      {/* Comparison Table */}
+      <section className="container py-16">
+        <h3 className="text-4xl font-bold text-gray-900 mb-12 text-center">
+          Comparaison Multi-Quartiers
+        </h3>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-gray-100 border-b-2 border-gray-300">
+                <th className="p-4 text-left font-bold text-gray-900">Critère</th>
+                <th className="p-4 text-center font-bold text-amber-700">Campoamor</th>
+                <th className="p-4 text-center font-bold text-blue-700">San Antón</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-gray-200 hover:bg-gray-50">
+                <td className="p-4 text-gray-700">Prix Achat (€/m²)</td>
+                <td className="p-4 text-center font-bold text-gray-900">2 100 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">2 100 €</td>
+              </tr>
+              <tr className="border-b border-gray-200 hover:bg-gray-50">
+                <td className="p-4 text-gray-700">Loyer (€/m²)</td>
+                <td className="p-4 text-center font-bold text-gray-900">11,5 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">10,5 €</td>
+              </tr>
+              <tr className="border-b border-gray-200 hover:bg-gray-50">
+                <td className="p-4 text-gray-700">Coût Mensuel Achat</td>
+                <td className="p-4 text-center font-bold text-amber-700">770 €</td>
+                <td className="p-4 text-center font-bold text-blue-700">740 €</td>
+              </tr>
+              <tr className="border-b border-gray-200 hover:bg-gray-50">
+                <td className="p-4 text-gray-700">Loyer Mensuel</td>
+                <td className="p-4 text-center font-bold text-gray-900">805 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">735 €</td>
+              </tr>
+              <tr className="border-b border-gray-200 hover:bg-gray-50">
+                <td className="p-4 text-gray-700">Rendement Locatif</td>
+                <td className="p-4 text-center font-bold text-gray-900">6,57%</td>
+                <td className="p-4 text-center font-bold text-gray-900">6,35%</td>
+              </tr>
+              <tr className="border-b border-gray-200 hover:bg-gray-50">
+                <td className="p-4 text-gray-700">Prestige</td>
+                <td className="p-4 text-center font-bold text-gray-900">Élevé</td>
+                <td className="p-4 text-center font-bold text-gray-900">Modéré</td>
+              </tr>
+              <tr className="bg-gray-50">
+                <td className="p-4 text-gray-700 font-bold">Potentiel de Croissance</td>
+                <td className="p-4 text-center font-bold text-amber-700">2% / an</td>
+                <td className="p-4 text-center font-bold text-blue-700">2,5% / an</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -254,7 +381,7 @@ export default function HomePage() {
               70 m² - 2-3 Chambres
             </h4>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              Un appartement typique de Campoamor offrant un excellent rapport qualité-prix. Design minimaliste Scandinavien avec accents méditerranéens, luminosité naturelle généreuse, et finitions modernes.
+              Un appartement typique de {current.name} offrant un excellent rapport qualité-prix. Design minimaliste Scandinavien avec accents méditerranéens, luminosité naturelle généreuse, et finitions modernes.
             </p>
 
             <div className="space-y-6">
@@ -286,7 +413,7 @@ export default function HomePage() {
 
               <div className="pt-6 border-t border-gray-200">
                 <p className="text-sm text-gray-600 mb-4">
-                  Quartier Campoamor offre une excellente qualité de vie avec proximité des commerces, transports et services.
+                  Quartier {current.name} offre une excellente qualité de vie avec proximité des commerces, transports et services.
                 </p>
                 <Button className="bg-amber-700 hover:bg-amber-800 text-white w-full py-3 text-lg">
                   Voir Annonces Similaires
@@ -307,16 +434,16 @@ export default function HomePage() {
             Recommandation
           </h3>
           <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-            Pour un horizon temporel supérieur à quelques années, l'achat d'un appartement à Campoamor est fortement recommandé. Le coût mensuel est inférieur à la location, et vous construisez progressivement un patrimoine immobilier.
+            Pour un horizon temporel supérieur à quelques années, l'achat d'un appartement à {current.name} est fortement recommandé. Le coût mensuel est inférieur à la location, et vous construisez progressivement un patrimoine immobilier.
           </p>
 
           <div className="bg-amber-50 border-l-4 border-l-amber-700 p-8 rounded-lg mb-8">
             <p className="text-gray-900 font-accent mb-2">Points Clés</p>
             <ul className="text-left space-y-2 text-gray-700">
-              <li>✓ Coût mensuel inférieur de 50 € comparé à la location</li>
-              <li>✓ Création de 52 910 € de patrimoine net en 10 ans</li>
-              <li>✓ Rendement locatif brut attractif de 6.57 %</li>
-              <li>✓ Quartier en forte croissance avec appréciation de 2% par an</li>
+              <li>✓ Coût mensuel inférieur de {current.monthlyRent - current.monthlyBuyCost} € comparé à la location</li>
+              <li>✓ Création de ~50 000 € de patrimoine net en 10 ans</li>
+              <li>✓ Rendement locatif brut attractif de {current.rentalYield}%</li>
+              <li>✓ Quartier en croissance avec appréciation de {current.growth}</li>
             </ul>
           </div>
 
