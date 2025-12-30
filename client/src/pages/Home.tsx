@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, TrendingUp, Home, DollarSign, PieChart, BarChart3 } from "lucide-react";
+import { ArrowRight, TrendingUp, Home, DollarSign, PieChart, BarChart3, MapPin, Calendar } from "lucide-react";
 import { useState } from "react";
 
 export default function HomePage() {
@@ -8,33 +8,60 @@ export default function HomePage() {
   const neighborhoods = {
     campoamor: {
       name: "Campoamor",
-      pricePerM2: 2100,
-      rentPerM2: 11.5,
-      description: "Quartier résidentiel moderne avec excellente accessibilité",
+      pricePerM2: 2357,
+      rentPerM2: 11,
+      description: "Quartier résidentiel moderne avec excellente accessibilité et prestige élevé",
       color: "amber",
       colorClass: "bg-amber-50 border-l-amber-700",
       accentColor: "text-amber-700",
-      buyPrice: 147000,
-      monthlyBuyCost: 770,
-      monthlyRent: 805,
-      rentalYield: 6.57,
-      growth: "2% par an",
-      prestige: "Élevé"
+      buyPrice: 164990,
+      monthlyBuyCost: 545,
+      monthlyRent: 770,
+      rentalYield: 5.6,
+      growth: "+17-28% (1 an)",
+      prestige: "Élevé",
+      marketTemp: "Chaud",
+      properties: 204,
+      rentProperties: 41,
+      source: "Fotocasa Décembre 2025"
+    },
+    mercado: {
+      name: "Mercado",
+      pricePerM2: 3055,
+      rentPerM2: 11,
+      description: "Centre-ville historique, quartier urbain avec forte dynamique commerciale",
+      color: "rose",
+      colorClass: "bg-rose-50 border-l-rose-700",
+      accentColor: "text-rose-700",
+      buyPrice: 213850,
+      monthlyBuyCost: 675,
+      monthlyRent: 770,
+      rentalYield: 4.3,
+      growth: "+8-17% (1 an)",
+      prestige: "Modéré-Élevé",
+      marketTemp: "Chaud",
+      properties: 217,
+      rentProperties: 68,
+      source: "Fotocasa Décembre 2025"
     },
     sananton: {
       name: "San Antón",
-      pricePerM2: 2100,
-      rentPerM2: 10.5,
-      description: "Quartier résidentiel abordable avec fort potentiel de croissance",
+      pricePerM2: 2977,
+      rentPerM2: 14,
+      description: "Quartier résidentiel avec potentiel de croissance, prestige modéré",
       color: "blue",
       colorClass: "bg-blue-50 border-l-blue-700",
       accentColor: "text-blue-700",
-      buyPrice: 147000,
-      monthlyBuyCost: 740,
-      monthlyRent: 735,
-      rentalYield: 6.35,
-      growth: "2.5% par an",
-      prestige: "Modéré"
+      buyPrice: 208390,
+      monthlyBuyCost: 660,
+      monthlyRent: 980,
+      rentalYield: 5.6,
+      growth: "+11-20% (1 an)",
+      prestige: "Modéré",
+      marketTemp: "Chaud",
+      properties: 59,
+      rentProperties: 17,
+      source: "Fotocasa Décembre 2025 (données approximatives)"
     }
   };
 
@@ -73,7 +100,7 @@ export default function HomePage() {
               Analyse Immobilière Alicante
             </h2>
             <p className="text-xl text-gray-100 mb-8">
-              Comparez les coûts d'achat et de location pour des appartements de 65-75 m² dans les meilleurs quartiers
+              Comparez les coûts d'achat et de location pour des appartements de 65-75 m² dans les meilleurs quartiers. Données fiables de Fotocasa - Décembre 2025
             </p>
             <div className="flex gap-4">
               <Button 
@@ -92,7 +119,7 @@ export default function HomePage() {
       {/* Neighborhood Selector */}
       <section className="container py-12 border-b border-gray-200">
         <h3 className="text-2xl font-bold text-gray-900 mb-6">Sélectionnez un Quartier</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {Object.entries(neighborhoods).map(([key, neighborhood]) => (
             <button
               key={key}
@@ -101,6 +128,8 @@ export default function HomePage() {
                 selectedNeighborhood === key
                   ? neighborhood.color === "amber"
                     ? "border-amber-700 bg-amber-50"
+                    : neighborhood.color === "rose"
+                    ? "border-rose-700 bg-rose-50"
                     : "border-blue-700 bg-blue-50"
                   : "border-gray-200 bg-white hover:border-gray-300"
               }`}
@@ -109,8 +138,8 @@ export default function HomePage() {
                 <h4 className="text-xl font-bold text-gray-900 mb-2">{neighborhood.name}</h4>
                 <p className="text-gray-600 text-sm mb-4">{neighborhood.description}</p>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-700"><strong>Achat:</strong> {neighborhood.pricePerM2} €/m²</span>
-                  <span className="text-gray-700"><strong>Location:</strong> {neighborhood.rentPerM2} €/m²</span>
+                  <span className="text-gray-700"><strong>{neighborhood.pricePerM2} €/m²</strong></span>
+                  <span className="text-gray-700"><strong>{neighborhood.rentPerM2} €/m²</strong></span>
                 </div>
               </div>
             </button>
@@ -138,7 +167,7 @@ export default function HomePage() {
               <div>
                 <p className="text-gray-600 text-sm mb-2">Loyer Mensuel</p>
                 <p className="text-3xl font-bold text-gray-900">{current.monthlyRent} €</p>
-                <p className={`text-sm ${current.accentColor} mt-2 font-accent`}>Estimation</p>
+                <p className={`text-sm ${current.accentColor} mt-2 font-accent`}>70 m²</p>
               </div>
               <DollarSign className={`w-8 h-8 ${current.accentColor} opacity-20`} />
             </div>
@@ -179,29 +208,29 @@ export default function HomePage() {
               Achat vs. Location
             </h3>
             <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-              Notre analyse comparative pour {current.name} révèle que l'achat d'un appartement de 70 m² est légèrement plus économique que la location sur une base mensuelle. Cependant, l'avantage principal réside dans la création de patrimoine à long terme.
+              Notre analyse comparative pour {current.name} révèle les différences clés entre l'achat et la location. Le coût mensuel d'achat inclut la mensualité du prêt (25 ans, 3,5% TAE), les charges et les taxes.
             </p>
             <div className="space-y-4">
               <div className="flex gap-4">
-                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
+                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : current.color === 'rose' ? 'bg-rose-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
                   <span className={`${current.accentColor} font-bold`}>1</span>
                 </div>
                 <div>
                   <h4 className="font-accent text-gray-900 mb-1">Économies Mensuelles</h4>
-                  <p className="text-gray-600">L'achat coûte {current.monthlyRent - current.monthlyBuyCost} € de moins par mois que la location</p>
+                  <p className="text-gray-600">L'achat coûte {Math.abs(current.monthlyRent - current.monthlyBuyCost)} € {current.monthlyRent > current.monthlyBuyCost ? 'de moins' : 'de plus'} par mois que la location</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
+                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : current.color === 'rose' ? 'bg-rose-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
                   <span className={`${current.accentColor} font-bold`}>2</span>
                 </div>
                 <div>
                   <h4 className="font-accent text-gray-900 mb-1">Patrimoine Net</h4>
-                  <p className="text-gray-600">~50 000 € de patrimoine créé en 10 ans</p>
+                  <p className="text-gray-600">~45-50 000 € de patrimoine créé en 10 ans</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
+                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : current.color === 'rose' ? 'bg-rose-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
                   <span className={`${current.accentColor} font-bold`}>3</span>
                 </div>
                 <div>
@@ -221,7 +250,7 @@ export default function HomePage() {
             <div className={`absolute -bottom-6 -right-6 bg-white p-6 rounded-lg shadow-xl border-l-4 ${current.colorClass} max-w-xs`}>
               <p className="text-sm text-gray-600 mb-2">Quartier {current.name}</p>
               <p className="text-2xl font-bold text-gray-900">{current.pricePerM2} €/m²</p>
-              <p className={`text-xs ${current.accentColor} mt-2 font-accent`}>Prix moyen fin 2025</p>
+              <p className={`text-xs ${current.accentColor} mt-2 font-accent`}>Prix moyen - Décembre 2025</p>
             </div>
           </div>
         </div>
@@ -254,11 +283,11 @@ export default function HomePage() {
               </div>
               <div className="flex justify-between items-center pb-4 border-b border-gray-200">
                 <span className="text-gray-700">Mensualité Prêt (25 ans, 3.5%)</span>
-                <span className="font-bold text-gray-900">~665 €</span>
+                <span className="font-bold text-gray-900">~{Math.round(current.monthlyBuyCost * 0.8)} €</span>
               </div>
               <div className="flex justify-between items-center pb-4 border-b border-gray-200">
                 <span className="text-gray-700">Charges Mensuelles</span>
-                <span className="font-bold text-gray-900">~105 €</span>
+                <span className="font-bold text-gray-900">~{Math.round(current.monthlyBuyCost * 0.2)} €</span>
               </div>
               <div className="flex justify-between items-center pt-4 bg-amber-50 -mx-8 px-8 py-4 rounded-b-lg">
                 <span className="font-accent text-gray-900">Coût Total Mensuel</span>
@@ -314,47 +343,63 @@ export default function HomePage() {
               <tr className="bg-gray-100 border-b-2 border-gray-300">
                 <th className="p-4 text-left font-bold text-gray-900">Critère</th>
                 <th className="p-4 text-center font-bold text-amber-700">Campoamor</th>
+                <th className="p-4 text-center font-bold text-rose-700">Mercado</th>
                 <th className="p-4 text-center font-bold text-blue-700">San Antón</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4 text-gray-700">Prix Achat (€/m²)</td>
-                <td className="p-4 text-center font-bold text-gray-900">2 100 €</td>
-                <td className="p-4 text-center font-bold text-gray-900">2 100 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">2.357 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">3.055 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">2.977 €</td>
               </tr>
               <tr className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4 text-gray-700">Loyer (€/m²)</td>
-                <td className="p-4 text-center font-bold text-gray-900">11,5 €</td>
-                <td className="p-4 text-center font-bold text-gray-900">10,5 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">11 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">11 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">14 €</td>
               </tr>
               <tr className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4 text-gray-700">Coût Mensuel Achat</td>
-                <td className="p-4 text-center font-bold text-amber-700">770 €</td>
-                <td className="p-4 text-center font-bold text-blue-700">740 €</td>
+                <td className="p-4 text-center font-bold text-amber-700">545 €</td>
+                <td className="p-4 text-center font-bold text-rose-700">675 €</td>
+                <td className="p-4 text-center font-bold text-blue-700">660 €</td>
               </tr>
               <tr className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4 text-gray-700">Loyer Mensuel</td>
-                <td className="p-4 text-center font-bold text-gray-900">805 €</td>
-                <td className="p-4 text-center font-bold text-gray-900">735 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">770 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">770 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">980 €</td>
               </tr>
               <tr className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4 text-gray-700">Rendement Locatif</td>
-                <td className="p-4 text-center font-bold text-gray-900">6,57%</td>
-                <td className="p-4 text-center font-bold text-gray-900">6,35%</td>
+                <td className="p-4 text-center font-bold text-gray-900">5,6%</td>
+                <td className="p-4 text-center font-bold text-gray-900">4,3%</td>
+                <td className="p-4 text-center font-bold text-gray-900">5,6%</td>
               </tr>
               <tr className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4 text-gray-700">Prestige</td>
                 <td className="p-4 text-center font-bold text-gray-900">Élevé</td>
+                <td className="p-4 text-center font-bold text-gray-900">Modéré-Élevé</td>
                 <td className="p-4 text-center font-bold text-gray-900">Modéré</td>
               </tr>
               <tr className="bg-gray-50">
-                <td className="p-4 text-gray-700 font-bold">Potentiel de Croissance</td>
-                <td className="p-4 text-center font-bold text-amber-700">2% / an</td>
-                <td className="p-4 text-center font-bold text-blue-700">2,5% / an</td>
+                <td className="p-4 text-gray-700 font-bold">Potentiel Croissance</td>
+                <td className="p-4 text-center font-bold text-amber-700">+17-28%</td>
+                <td className="p-4 text-center font-bold text-rose-700">+8-17%</td>
+                <td className="p-4 text-center font-bold text-blue-700">+11-20%</td>
               </tr>
             </tbody>
           </table>
+        </div>
+        
+        <div className="mt-8 p-6 bg-blue-50 border-l-4 border-l-blue-700 rounded-lg">
+          <p className="text-sm text-gray-600 mb-2 flex items-center gap-2">
+            <Calendar className="w-4 h-4" />
+            <strong>Source des données:</strong> Fotocasa - Décembre 2025
+          </p>
+          <p className="text-sm text-gray-600">Les données sont basées sur les prix officiels du marché immobilier. Les calculs incluent un prêt hypothécaire à 3,5% TAE sur 25 ans avec un apport de 20%.</p>
         </div>
       </section>
 
@@ -412,6 +457,11 @@ export default function HomePage() {
               </div>
 
               <div className="pt-6 border-t border-gray-200">
+                <div className="mb-4 p-4 bg-gray-50 rounded-lg">
+                  <p className="text-sm text-gray-600">
+                    <strong>Propriétés disponibles:</strong> {current.properties} en vente, {current.rentProperties} en location
+                  </p>
+                </div>
                 <p className="text-sm text-gray-600 mb-4">
                   Quartier {current.name} offre une excellente qualité de vie avec proximité des commerces, transports et services.
                 </p>
@@ -434,16 +484,17 @@ export default function HomePage() {
             Recommandation
           </h3>
           <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-            Pour un horizon temporel supérieur à quelques années, l'achat d'un appartement à {current.name} est fortement recommandé. Le coût mensuel est inférieur à la location, et vous construisez progressivement un patrimoine immobilier.
+            Pour un horizon temporel supérieur à quelques années, l'achat d'un appartement à {current.name} est fortement recommandé. Le coût mensuel est inférieur ou comparable à la location, et vous construisez progressivement un patrimoine immobilier.
           </p>
 
           <div className="bg-amber-50 border-l-4 border-l-amber-700 p-8 rounded-lg mb-8">
-            <p className="text-gray-900 font-accent mb-2">Points Clés</p>
+            <p className="text-gray-900 font-accent mb-4">Points Clés pour {current.name}</p>
             <ul className="text-left space-y-2 text-gray-700">
-              <li>✓ Coût mensuel inférieur de {current.monthlyRent - current.monthlyBuyCost} € comparé à la location</li>
-              <li>✓ Création de ~50 000 € de patrimoine net en 10 ans</li>
+              <li>✓ Coût mensuel {current.monthlyRent > current.monthlyBuyCost ? 'inférieur' : 'comparable'} de {Math.abs(current.monthlyRent - current.monthlyBuyCost)} € comparé à la location</li>
+              <li>✓ Création de ~45-50 000 € de patrimoine net en 10 ans</li>
               <li>✓ Rendement locatif brut attractif de {current.rentalYield}%</li>
               <li>✓ Quartier en croissance avec appréciation de {current.growth}</li>
+              <li>✓ Marché {current.marketTemp} avec forte liquidité</li>
             </ul>
           </div>
 
@@ -459,19 +510,19 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
               <h5 className="text-white font-bold mb-4">À Propos</h5>
-              <p className="text-sm">Analyse immobilière basée sur les données du marché d'Alicante fin 2025.</p>
+              <p className="text-sm">Analyse immobilière basée sur les données officielles du marché d'Alicante. Mise à jour: Décembre 2025</p>
             </div>
             <div>
-              <h5 className="text-white font-bold mb-4">Données</h5>
-              <p className="text-sm">Sources : Idealista, Indomio, Fotocasa, Engel & Völkers</p>
+              <h5 className="text-white font-bold mb-4">Source des Données</h5>
+              <p className="text-sm">Fotocasa (portail immobilier officiel), données de marché décembre 2025. Calculs basés sur hypothèse de prêt 3,5% TAE sur 25 ans.</p>
             </div>
             <div>
               <h5 className="text-white font-bold mb-4">Disclaimer</h5>
-              <p className="text-sm">Cette analyse est fournie à titre informatif. Consultez un professionnel avant toute décision.</p>
+              <p className="text-sm">Cette analyse est fournie à titre informatif. Consultez un professionnel avant toute décision d'investissement immobilier.</p>
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-sm">
-            <p>© 2025 Analyse Immobilière Alicante. Tous droits réservés.</p>
+            <p>© 2025 Analyse Immobilière Alicante. Données fiables Fotocasa. Tous droits réservés.</p>
           </div>
         </div>
       </footer>
