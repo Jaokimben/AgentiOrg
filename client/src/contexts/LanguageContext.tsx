@@ -274,7 +274,91 @@ const fr = {
   "contact.error.required": "Veuillez remplir tous les champs obligatoires",
   "contact.error.generic": "Une erreur est survenue. Veuillez réessayer.",
   "contact.success.toast": "Votre demande a été envoyée avec succès !",
-  "assessment.saved": "Résultats sauvegardés avec succès"
+  "assessment.saved": "Résultats sauvegardés avec succès",
+  
+  // How to Work Section
+  "howToWork.title": "Comment Travailler Avec Nous ?",
+  "howToWork.description": "Une approche structurée en trois étapes pour transformer votre organisation",
+  "howToWork.step1.title": "Comprendre le Framework",
+  "howToWork.step1.description": "Découvrez les concepts fondamentaux des Organisations Agentiques et la vision stratégique",
+  "howToWork.step1.cta": "Découvrir les concepts",
+  "howToWork.step2.title": "Évaluer la Maturité",
+  "howToWork.step2.description": "Mesurez votre préparation organisationnelle et identifiez les opportunités d'amélioration",
+  "howToWork.step2.cta": "Commencer l'évaluation",
+  "howToWork.step3.title": "Planifier un Atelier",
+  "howToWork.step3.description": "Obtenez un plan d'action personnalisé avec nos experts pour accélérer votre transformation",
+  "howToWork.step3.cta": "Planifier une consultation",
+  
+  // Use Cases Section
+  "useCases.title": "Cas d'Usage Concrets",
+  "useCases.description": "Découvrez comment d'autres organisations transforment leurs opérations avec les Organisations Agentiques",
+  "useCases.case1.title": "Service Client Intelligent",
+  "useCases.case1.description": "Agents IA de support automatisant les requêtes courantes tout en permettant l'escalade humaine pour les cas complexes",
+  "useCases.case1.metrics": "Résultats: -40% temps de réponse, +25% satisfaction client, -30% coût opérationnel",
+  "useCases.case2.title": "Direction Financière Augmentée",
+  "useCases.case2.description": "Agents d'analyse financière détectant les anomalies, prédisant les tendances et optimisant les flux de trésorerie",
+  "useCases.case2.metrics": "Résultats: 95% des anomalies détectées automatiquement, -20% erreurs de reporting, +15% précision prévisions",
+  "useCases.case3.title": "Gestion Proactive des Risques",
+  "useCases.case3.description": "Agents de monitoring continu identifiant les risques opérationnels, cybersécurité et conformité en temps réel",
+  "useCases.case3.metrics": "Résultats: -60% incidents de sécurité, -50% temps de détection, +35% conformité réglementaire",
+  "useCases.case4.title": "Optimisation Opérationnelle",
+  "useCases.case4.description": "Agents d'optimisation automatisant les processus répétitifs et identifiant les inefficacités dans la chaîne de valeur",
+  "useCases.case4.metrics": "Résultats: -25% coûts opérationnels, +30% efficacité processus, +20% productivité équipes",
+  
+  // Tooling & Stack Section
+  "tooling.title": "Stack Technologique Agentique",
+  "tooling.description": "Les grandes briques technologiques pour construire votre Organisation Agentique",
+  "tooling.orchestrators.title": "Orchestrateurs d'Agents",
+  "tooling.orchestrators.description": "Plateformes pour coordonner et gérer des flottes d'agents IA (AutoGen, CrewAI, LangGraph)",
+  "tooling.governance.title": "Frameworks de Gouvernance",
+  "tooling.governance.description": "Outils pour implémenter le cadre SAIFE: sécurité, alignement, interopérabilité, fiabilité, éthique",
+  "tooling.monitoring.title": "Monitoring & Observabilité",
+  "tooling.monitoring.description": "Solutions pour suivre les performances, détecter les anomalies et assurer la conformité des agents",
+  "tooling.integration.title": "Intégration Entreprise",
+  "tooling.integration.description": "Connecteurs et APIs pour intégrer les agents avec vos outils existants (CRM, ERP, HRIS, etc.)",
+  
+  // Resources Section
+  "resources.title": "Ressources & Documentation",
+  "resources.description": "Accédez à nos guides, whitepapers et playbooks pour approfondir vos connaissances",
+  "resources.whitepaper.title": "Whitepaper: Designing Agentic Organizations",
+  "resources.whitepaper.description": "Document de référence complet sur l'architecture et l'implémentation des Organisations Agentiques",
+  "resources.whitepaper.cta": "Télécharger (PDF)",
+  "resources.playbook.title": "Playbook: MAO en 90 jours",
+  "resources.playbook.description": "Guide pratique étape par étape pour lancer votre première Organisation Agentique Minimale",
+  "resources.playbook.cta": "Télécharger (PDF)",
+  "resources.guide.title": "Guide: Gouvernance SAIFE",
+  "resources.guide.description": "Framework détaillé pour implémenter une gouvernance IA sécurisée, alignée, interopérable, fiable et éthique",
+  "resources.guide.cta": "Télécharger (PDF)",
+  "resources.leadMagnet.description": "Inscrivez-vous à notre newsletter pour recevoir nos dernières ressources et insights",
+  "resources.leadMagnet.placeholder": "votre.email@entreprise.com",
+  "resources.leadMagnet.cta": "S'inscrire",
+  
+  // Quiz Section
+  "quiz.badge": "Découvrez Votre Niveau",
+  "quiz.title": "Mini Quiz de Maturité Agentique",
+  "quiz.description": "Répondez à 5-7 questions pour obtenir un score de maturité instantané et des recommandations personnalisées",
+  "quiz.feature1": "Questions rapides",
+  "quiz.feature2": "Évaluation instantanée",
+  "quiz.feature3": "Gratuit & confidentiel",
+  "quiz.cta": "Démarrer le quiz",
+  
+  // Enhanced CTA Section
+  "cta.assessment.title": "Ce que contient l'évaluation",
+  "cta.assessment.feature1": "⏱ Durée: 10-15 minutes | Format: Quiz interactif en ligne",
+  "cta.assessment.feature2": "📊 Livrable: Score de maturité sur 5 dimensions + Rapport détaillé",
+  "cta.assessment.feature3": "🎯 Analyse: Benchmark sectoriel + Recommandations prioritaires",
+  "cta.assessment.feature4": "💼 Suivi: Option consultation stratégique avec nos experts",
+  "cta.audience.title": "À qui s'adresse l'évaluation ?",
+  "cta.audience.role1": "CEO & C-Suite: Vision stratégique transformation digitale",
+  "cta.audience.role2": "COO & Directeurs Opérationnels: Optimisation processus métier",
+  "cta.audience.role3": "CHRO & DRH: Évolution compétences et culture organisationnelle",
+  "cta.audience.role4": "CDO & Directeurs Innovation: Implémentation technologies IA",
+  
+  // Final CTA Section
+  "finalCta.title": "Prêt à Passer à l'Action ?",
+  "finalCta.description": "Commencez votre transformation agentique dès aujourd'hui avec notre évaluation gratuite ou planifiez un échange avec nos experts",
+  "finalCta.button1": "Évaluer ma maturité",
+  "finalCta.button2": "Planifier un échange"
 };
 
 // English translations
@@ -541,7 +625,91 @@ const en: typeof fr = {
   "contact.error.required": "Please fill in all required fields",
   "contact.error.generic": "An error occurred. Please try again.",
   "contact.success.toast": "Your request has been sent successfully!",
-  "assessment.saved": "Results saved successfully"
+  "assessment.saved": "Results saved successfully",
+  
+  // How to Work Section
+  "howToWork.title": "How to Work With Us?",
+  "howToWork.description": "A structured three-step approach to transform your organization",
+  "howToWork.step1.title": "Understand the Framework",
+  "howToWork.step1.description": "Discover the fundamental concepts of Agentic Organizations and the strategic vision",
+  "howToWork.step1.cta": "Discover concepts",
+  "howToWork.step2.title": "Assess Maturity",
+  "howToWork.step2.description": "Measure your organizational readiness and identify improvement opportunities",
+  "howToWork.step2.cta": "Start assessment",
+  "howToWork.step3.title": "Schedule a Workshop",
+  "howToWork.step3.description": "Get a personalized action plan with our experts to accelerate your transformation",
+  "howToWork.step3.cta": "Schedule consultation",
+  
+  // Use Cases Section
+  "useCases.title": "Real-World Use Cases",
+  "useCases.description": "Discover how other organizations are transforming their operations with Agentic Organizations",
+  "useCases.case1.title": "Intelligent Customer Service",
+  "useCases.case1.description": "AI support agents automating routine queries while enabling human escalation for complex cases",
+  "useCases.case1.metrics": "Results: -40% response time, +25% customer satisfaction, -30% operational cost",
+  "useCases.case2.title": "Augmented Finance Department",
+  "useCases.case2.description": "Financial analysis agents detecting anomalies, predicting trends, and optimizing cash flow",
+  "useCases.case2.metrics": "Results: 95% anomalies detected automatically, -20% reporting errors, +15% forecast accuracy",
+  "useCases.case3.title": "Proactive Risk Management",
+  "useCases.case3.description": "Continuous monitoring agents identifying operational risks, cybersecurity, and compliance in real-time",
+  "useCases.case3.metrics": "Results: -60% security incidents, -50% detection time, +35% regulatory compliance",
+  "useCases.case4.title": "Operational Optimization",
+  "useCases.case4.description": "Optimization agents automating repetitive processes and identifying inefficiencies in the value chain",
+  "useCases.case4.metrics": "Results: -25% operational costs, +30% process efficiency, +20% team productivity",
+  
+  // Tooling & Stack Section
+  "tooling.title": "Agentic Technology Stack",
+  "tooling.description": "The key technology building blocks to construct your Agentic Organization",
+  "tooling.orchestrators.title": "Agent Orchestrators",
+  "tooling.orchestrators.description": "Platforms to coordinate and manage fleets of AI agents (AutoGen, CrewAI, LangGraph)",
+  "tooling.governance.title": "Governance Frameworks",
+  "tooling.governance.description": "Tools to implement the SAIFE framework: security, alignment, interoperability, reliability, ethics",
+  "tooling.monitoring.title": "Monitoring & Observability",
+  "tooling.monitoring.description": "Solutions to track performance, detect anomalies, and ensure agent compliance",
+  "tooling.integration.title": "Enterprise Integration",
+  "tooling.integration.description": "Connectors and APIs to integrate agents with your existing tools (CRM, ERP, HRIS, etc.)",
+  
+  // Resources Section
+  "resources.title": "Resources & Documentation",
+  "resources.description": "Access our guides, whitepapers, and playbooks to deepen your knowledge",
+  "resources.whitepaper.title": "Whitepaper: Designing Agentic Organizations",
+  "resources.whitepaper.description": "Comprehensive reference document on the architecture and implementation of Agentic Organizations",
+  "resources.whitepaper.cta": "Download (PDF)",
+  "resources.playbook.title": "Playbook: MAO in 90 Days",
+  "resources.playbook.description": "Practical step-by-step guide to launch your first Minimal Agentic Organization",
+  "resources.playbook.cta": "Download (PDF)",
+  "resources.guide.title": "Guide: SAIFE Governance",
+  "resources.guide.description": "Detailed framework for implementing secure, aligned, interoperable, reliable, and ethical AI governance",
+  "resources.guide.cta": "Download (PDF)",
+  "resources.leadMagnet.description": "Subscribe to our newsletter to receive our latest resources and insights",
+  "resources.leadMagnet.placeholder": "your.email@company.com",
+  "resources.leadMagnet.cta": "Subscribe",
+  
+  // Quiz Section
+  "quiz.badge": "Discover Your Level",
+  "quiz.title": "Agentic Maturity Mini Quiz",
+  "quiz.description": "Answer 5-7 questions to get an instant maturity score and personalized recommendations",
+  "quiz.feature1": "Quick questions",
+  "quiz.feature2": "Instant assessment",
+  "quiz.feature3": "Free & confidential",
+  "quiz.cta": "Start the quiz",
+  
+  // Enhanced CTA Section
+  "cta.assessment.title": "What the assessment includes",
+  "cta.assessment.feature1": "⏱ Duration: 10-15 minutes | Format: Interactive online quiz",
+  "cta.assessment.feature2": "📊 Deliverable: Maturity score on 5 dimensions + Detailed report",
+  "cta.assessment.feature3": "🎯 Analysis: Sector benchmark + Priority recommendations",
+  "cta.assessment.feature4": "💼 Follow-up: Strategic consultation option with our experts",
+  "cta.audience.title": "Who is the assessment for?",
+  "cta.audience.role1": "CEO & C-Suite: Strategic vision for digital transformation",
+  "cta.audience.role2": "COO & Operations Directors: Business process optimization",
+  "cta.audience.role3": "CHRO & HR Directors: Skills and organizational culture evolution",
+  "cta.audience.role4": "CDO & Innovation Directors: AI technology implementation",
+  
+  // Final CTA Section
+  "finalCta.title": "Ready to Take Action?",
+  "finalCta.description": "Start your agentic transformation today with our free assessment or schedule a call with our experts",
+  "finalCta.button1": "Assess my maturity",
+  "finalCta.button2": "Schedule a call"
 };
 
 const translations = { fr, en };

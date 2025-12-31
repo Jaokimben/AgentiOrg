@@ -16,7 +16,17 @@ import {
   Lightbulb,
   Handshake,
   GraduationCap,
-  ChevronRight
+  ChevronRight,
+  Sparkles,
+  ClipboardCheck,
+  UserCheck,
+  Code,
+  BarChart3,
+  AlertTriangle,
+  Download,
+  BookOpen,
+  FileText,
+  TrendingUp
 } from "lucide-react";
 
 // Navigation Header Component
@@ -94,6 +104,297 @@ function HeroSection() {
   );
 }
 
+// How to Work With Us Section
+function HowToWorkSection() {
+  const { t } = useLanguage();
+  
+  const steps = [
+    {
+      number: 1,
+      icon: BookOpen,
+      titleKey: "howToWork.step1.title",
+      descriptionKey: "howToWork.step1.description",
+      ctaKey: "howToWork.step1.cta",
+      link: "#concepts"
+    },
+    {
+      number: 2,
+      icon: ClipboardCheck,
+      titleKey: "howToWork.step2.title",
+      descriptionKey: "howToWork.step2.description",
+      ctaKey: "howToWork.step2.cta",
+      link: "/evaluation"
+    },
+    {
+      number: 3,
+      icon: UserCheck,
+      titleKey: "howToWork.step3.title",
+      descriptionKey: "howToWork.step3.description",
+      ctaKey: "howToWork.step3.cta",
+      link: "/contact"
+    }
+  ];
+
+  return (
+    <section className="py-24 bg-gradient-to-b from-secondary to-background">
+      <div className="container">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+            {t("howToWork.title")}
+          </h2>
+          <div className="section-divider mx-auto mb-6"></div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            {t("howToWork.description")}
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {steps.map((step, index) => (
+            <div key={step.number} className="relative">
+              <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-accent">
+                <CardHeader className="text-center pb-4">
+                  <div className="mx-auto mb-4 relative">
+                    <div className="w-20 h-20 bg-gradient-navy rounded-full flex items-center justify-center">
+                      <step.icon className="w-10 h-10 text-white" />
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-bold text-sm">
+                      {step.number}
+                    </div>
+                  </div>
+                  <CardTitle className="text-xl text-primary">{t(step.titleKey)}</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <CardDescription className="text-base">{t(step.descriptionKey)}</CardDescription>
+                  <Link href={step.link}>
+                    <Button className="w-full bg-gradient-navy hover:opacity-90" size="sm">
+                      {t(step.ctaKey)}
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+              {index < steps.length - 1 && (
+                <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
+                  <ArrowRight className="w-8 h-8 text-accent" />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Use Cases Section
+function UseCasesSection() {
+  const { t } = useLanguage();
+  
+  const useCases = [
+    {
+      icon: Users,
+      titleKey: "useCases.case1.title",
+      descriptionKey: "useCases.case1.description",
+      metricsKey: "useCases.case1.metrics",
+      color: "text-blue-600"
+    },
+    {
+      icon: BarChart3,
+      titleKey: "useCases.case2.title",
+      descriptionKey: "useCases.case2.description",
+      metricsKey: "useCases.case2.metrics",
+      color: "text-green-600"
+    },
+    {
+      icon: AlertTriangle,
+      titleKey: "useCases.case3.title",
+      descriptionKey: "useCases.case3.description",
+      metricsKey: "useCases.case3.metrics",
+      color: "text-orange-600"
+    },
+    {
+      icon: TrendingUp,
+      titleKey: "useCases.case4.title",
+      descriptionKey: "useCases.case4.description",
+      metricsKey: "useCases.case4.metrics",
+      color: "text-purple-600"
+    }
+  ];
+
+  return (
+    <section className="py-24 bg-secondary">
+      <div className="container">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+            {t("useCases.title")}
+          </h2>
+          <div className="section-divider mx-auto mb-6"></div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            {t("useCases.description")}
+          </p>
+        </div>
+        <div className="grid md:grid-cols-2 gap-8">
+          {useCases.map((useCase, index) => (
+            <Card key={index} className="hover:shadow-xl transition-all duration-300 border-2 hover:border-accent">
+              <CardHeader>
+                <div className="flex items-start gap-4">
+                  <div className={`w-14 h-14 rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center shrink-0`}>
+                    <useCase.icon className={`w-8 h-8 ${useCase.color}`} />
+                  </div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl text-primary mb-2">{t(useCase.titleKey)}</CardTitle>
+                    <CardDescription className="text-base">{t(useCase.descriptionKey)}</CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="bg-accent/5 rounded-lg p-4 border-l-4 border-accent">
+                  <div className="flex items-start gap-2">
+                    <TrendingUp className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                    <p className="text-sm font-semibold text-foreground">{t(useCase.metricsKey)}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Tooling & Stack Section
+function ToolingSection() {
+  const { t } = useLanguage();
+  
+  const tools = [
+    {
+      icon: Code,
+      titleKey: "tooling.orchestrators.title",
+      descriptionKey: "tooling.orchestrators.description"
+    },
+    {
+      icon: Shield,
+      titleKey: "tooling.governance.title",
+      descriptionKey: "tooling.governance.description"
+    },
+    {
+      icon: BarChart3,
+      titleKey: "tooling.monitoring.title",
+      descriptionKey: "tooling.monitoring.description"
+    },
+    {
+      icon: Layers,
+      titleKey: "tooling.integration.title",
+      descriptionKey: "tooling.integration.description"
+    }
+  ];
+
+  return (
+    <section className="py-24 bg-background">
+      <div className="container">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+            {t("tooling.title")}
+          </h2>
+          <div className="section-divider mx-auto mb-6"></div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            {t("tooling.description")}
+          </p>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {tools.map((tool, index) => (
+            <Card key={index} className="text-center hover:shadow-lg transition-all duration-300 border-2 hover:border-accent">
+              <CardHeader>
+                <div className="w-16 h-16 mx-auto bg-gradient-navy rounded-full flex items-center justify-center mb-4">
+                  <tool.icon className="w-8 h-8 text-white" />
+                </div>
+                <CardTitle className="text-lg text-primary">{t(tool.titleKey)}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-sm">{t(tool.descriptionKey)}</CardDescription>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Resources Section
+function ResourcesSection() {
+  const { t } = useLanguage();
+  
+  const resources = [
+    {
+      icon: FileText,
+      titleKey: "resources.whitepaper.title",
+      descriptionKey: "resources.whitepaper.description",
+      ctaKey: "resources.whitepaper.cta"
+    },
+    {
+      icon: BookOpen,
+      titleKey: "resources.playbook.title",
+      descriptionKey: "resources.playbook.description",
+      ctaKey: "resources.playbook.cta"
+    },
+    {
+      icon: Target,
+      titleKey: "resources.guide.title",
+      descriptionKey: "resources.guide.description",
+      ctaKey: "resources.guide.cta"
+    }
+  ];
+
+  return (
+    <section className="py-24 bg-secondary">
+      <div className="container">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+            {t("resources.title")}
+          </h2>
+          <div className="section-divider mx-auto mb-6"></div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            {t("resources.description")}
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8">
+          {resources.map((resource, index) => (
+            <Card key={index} className="hover:shadow-xl transition-all duration-300 border-2 hover:border-accent">
+              <CardHeader className="text-center">
+                <div className="w-16 h-16 mx-auto bg-gradient-navy rounded-full flex items-center justify-center mb-4">
+                  <resource.icon className="w-8 h-8 text-white" />
+                </div>
+                <CardTitle className="text-xl text-primary">{t(resource.titleKey)}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <CardDescription className="text-center">{t(resource.descriptionKey)}</CardDescription>
+                <Button className="w-full bg-gradient-navy hover:opacity-90" size="sm">
+                  <Download className="w-4 h-4 mr-2" />
+                  {t(resource.ctaKey)}
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        <div className="mt-12 text-center">
+          <p className="text-sm text-muted-foreground mb-4">{t("resources.leadMagnet.description")}</p>
+          <div className="max-w-md mx-auto flex gap-2">
+            <input 
+              type="email" 
+              placeholder={t("resources.leadMagnet.placeholder")} 
+              className="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+            />
+            <Button className="bg-gradient-navy hover:opacity-90">
+              {t("resources.leadMagnet.cta")}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // Six Core Concepts Section
 function ConceptsSection() {
   const { t } = useLanguage();
@@ -144,7 +445,7 @@ function ConceptsSection() {
   ];
 
   return (
-    <section id="concepts" className="py-20 bg-background">
+    <section id="concepts" className="py-24 bg-background">
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
@@ -225,7 +526,7 @@ function GovernanceSection() {
   ];
 
   return (
-    <section id="governance" className="py-20 bg-secondary">
+    <section id="governance" className="py-24 bg-gradient-to-b from-background to-secondary">
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
@@ -316,7 +617,7 @@ function ImplementationSection() {
   ];
 
   return (
-    <section id="implementation" className="py-20 bg-background">
+    <section id="implementation" className="py-24 bg-secondary">
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
@@ -373,7 +674,7 @@ function MAOSection() {
   const { t } = useLanguage();
   
   return (
-    <section id="mao" className="py-20 bg-secondary">
+    <section id="mao" className="py-24 bg-background">
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
@@ -476,7 +777,7 @@ function CollaborationSection() {
   ];
 
   return (
-    <section id="collaboration" className="py-20 bg-background">
+    <section id="collaboration" className="py-24 bg-secondary">
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
@@ -533,20 +834,131 @@ function CollaborationSection() {
   );
 }
 
-// CTA Section
+// Quiz CTA Section
+function QuizCTASection() {
+  const { t } = useLanguage();
+  
+  return (
+    <section className="py-20 bg-gradient-to-br from-accent/10 via-primary/5 to-secondary">
+      <div className="container">
+        <div className="max-w-4xl mx-auto">
+          <Card className="border-2 border-accent shadow-2xl">
+            <CardContent className="p-8 md:p-12">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 rounded-full text-sm text-accent font-semibold mb-6">
+                  <Sparkles className="w-4 h-4" />
+                  <span>{t("quiz.badge")}</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+                  {t("quiz.title")}
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+                  {t("quiz.description")}
+                </p>
+              </div>
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                <div className="text-center p-4 bg-secondary rounded-lg">
+                  <div className="text-3xl font-bold text-accent mb-2">5-7</div>
+                  <div className="text-sm text-muted-foreground">{t("quiz.feature1")}</div>
+                </div>
+                <div className="text-center p-4 bg-secondary rounded-lg">
+                  <div className="text-3xl font-bold text-accent mb-2">3min</div>
+                  <div className="text-sm text-muted-foreground">{t("quiz.feature2")}</div>
+                </div>
+                <div className="text-center p-4 bg-secondary rounded-lg">
+                  <div className="text-3xl font-bold text-accent mb-2">100%</div>
+                  <div className="text-sm text-muted-foreground">{t("quiz.feature3")}</div>
+                </div>
+              </div>
+              <div className="text-center">
+                <Link href="/quiz">
+                  <Button size="lg" className="bg-gradient-navy hover:opacity-90 gap-2">
+                    <Sparkles className="w-5 h-5" />
+                    {t("quiz.cta")}
+                    <ArrowRight className="w-5 h-5" />
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Enhanced CTA Section
 function CTASection() {
   const { t } = useLanguage();
   
   return (
-    <section className="py-20 bg-gradient-navy">
+    <section className="py-24 bg-gradient-navy">
       <div className="container">
-        <div className="max-w-3xl mx-auto text-center text-white">
+        <div className="max-w-4xl mx-auto text-center text-white">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             {t("cta.title")}
           </h2>
           <p className="text-xl opacity-90 mb-8">
             {t("cta.description")}
           </p>
+          
+          {/* Assessment Details */}
+          <div className="grid md:grid-cols-2 gap-6 mb-12 text-left">
+            <Card className="bg-white/10 border-white/20 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <ClipboardCheck className="w-5 h-5" />
+                  {t("cta.assessment.title")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-white/90 space-y-2">
+                <p className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 mt-1 shrink-0" />
+                  <span>{t("cta.assessment.feature1")}</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 mt-1 shrink-0" />
+                  <span>{t("cta.assessment.feature2")}</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 mt-1 shrink-0" />
+                  <span>{t("cta.assessment.feature3")}</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 mt-1 shrink-0" />
+                  <span>{t("cta.assessment.feature4")}</span>
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-white/10 border-white/20 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Users className="w-5 h-5" />
+                  {t("cta.audience.title")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-white/90 space-y-2">
+                <p className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 mt-1 shrink-0" />
+                  <span>{t("cta.audience.role1")}</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 mt-1 shrink-0" />
+                  <span>{t("cta.audience.role2")}</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 mt-1 shrink-0" />
+                  <span>{t("cta.audience.role3")}</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 mt-1 shrink-0" />
+                  <span>{t("cta.audience.role4")}</span>
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+          
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/evaluation">
               <Button size="lg" variant="secondary" className="gap-2 bg-white text-primary hover:bg-white/90">
@@ -557,6 +969,41 @@ function CTASection() {
             <Link href="/contact">
               <Button size="lg" variant="outline" className="gap-2 border-white text-white hover:bg-white/10">
                 {t("cta.button2")}
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Final CTA Section (before footer)
+function FinalCTASection() {
+  const { t } = useLanguage();
+  
+  return (
+    <section className="py-16 bg-gradient-to-br from-accent/5 to-primary/5">
+      <div className="container">
+        <div className="max-w-3xl mx-auto text-center">
+          <h3 className="text-2xl md:text-3xl font-bold text-primary mb-4">
+            {t("finalCta.title")}
+          </h3>
+          <p className="text-lg text-muted-foreground mb-8">
+            {t("finalCta.description")}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/evaluation">
+              <Button size="lg" className="bg-gradient-navy hover:opacity-90 gap-2">
+                <ClipboardCheck className="w-5 h-5" />
+                {t("finalCta.button1")}
+                <ArrowRight className="w-5 h-5" />
+              </Button>
+            </Link>
+            <Link href="/contact">
+              <Button size="lg" variant="outline" className="gap-2">
+                <UserCheck className="w-5 h-5" />
+                {t("finalCta.button2")}
               </Button>
             </Link>
           </div>
@@ -624,12 +1071,18 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
+        <HowToWorkSection />
         <ConceptsSection />
         <GovernanceSection />
         <ImplementationSection />
         <MAOSection />
         <CollaborationSection />
+        <QuizCTASection />
+        <UseCasesSection />
+        <ToolingSection />
+        <ResourcesSection />
         <CTASection />
+        <FinalCTASection />
       </main>
       <Footer />
     </div>
