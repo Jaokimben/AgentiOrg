@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, TrendingUp, Home, DollarSign, PieChart, BarChart3, MapPin, Calendar } from "lucide-react";
+import { ArrowRight, TrendingUp, Home, DollarSign, PieChart, BarChart3, MapPin, Calendar, CheckCircle } from "lucide-react";
 import { useState } from "react";
 
 export default function HomePage() {
@@ -23,7 +22,14 @@ export default function HomePage() {
       marketTemp: "Chaud",
       properties: 1200,
       rentProperties: 450,
-      source: "Idealista Novembre 2025"
+      source: "Idealista Novembre 2025",
+      negotiationTarget: "5-8%",
+      negotiationArgs: [
+        "Le marché d'Alicante a connu une croissance moyenne de 15-18% en 1 an. Même avec une réduction de 5-10%, l'investissement reste rentable à long terme.",
+        "Comparé à la moyenne nationale (2.605 €/m²), Alicante reste 4% moins cher. Cela montre que le marché n'est pas surcoté.",
+        "Les rendements locatifs à Alicante (6,2%) dépassent la moyenne espagnole (5,4%). C'est un bon indicateur de rentabilité.",
+        "Avec 1.200+ propriétés en vente et 450+ en location, il y a une bonne liquidité. Cela vous donne du pouvoir de négociation."
+      ]
     },
     campoamor: {
       name: "Campoamor",
@@ -42,7 +48,14 @@ export default function HomePage() {
       marketTemp: "Chaud",
       properties: 204,
       rentProperties: 41,
-      source: "Fotocasa Décembre 2025"
+      source: "Fotocasa Décembre 2025",
+      negotiationTarget: "3-7%",
+      negotiationArgs: [
+        "Campoamor est 6% MOINS CHER que la moyenne d'Alicante (2.357 vs 2.509 €/m²). C'est déjà un bon prix de départ.",
+        "Avec une croissance de +17-28% en 1 an, Campoamor surperforme la moyenne (+15-18%). C'est un quartier en forte demande.",
+        "Le rendement locatif (5,6%) est excellent pour un quartier résidentiel de prestige. Cela justifie un prix compétitif.",
+        "Seulement 204 propriétés en vente (vs 1.200 en moyenne). L'offre est limitée, mais peu de propriétés en location (41) signifie peu de comparables."
+      ]
     },
     mercado: {
       name: "Mercado",
@@ -61,7 +74,14 @@ export default function HomePage() {
       marketTemp: "Chaud",
       properties: 217,
       rentProperties: 68,
-      source: "Fotocasa Décembre 2025"
+      source: "Fotocasa Décembre 2025",
+      negotiationTarget: "10-15%",
+      negotiationArgs: [
+        "Mercado est 22% PLUS CHER que la moyenne d'Alicante (3.055 vs 2.509 €/m²). Ce prix premium doit être justifié.",
+        "La croissance de Mercado (+8-17%) est INFÉRIEURE à la moyenne (+15-18%). C'est un signal d'alerte sur la dynamique du marché.",
+        "Le rendement locatif (5,5%) est MOINS BON que Campoamor (5,6%) et San Antón (5,6%). Pourquoi payer plus pour moins de rendement?",
+        "Les loyers (14 €/m²) ne sont que 1 €/m² plus élevés que Campoamor (11 €/m²). Le premium de prix n'est pas justifié par les loyers."
+      ]
     },
     sananton: {
       name: "San Antón",
@@ -80,7 +100,14 @@ export default function HomePage() {
       marketTemp: "Chaud",
       properties: 59,
       rentProperties: 17,
-      source: "Fotocasa Décembre 2025 (données approximatives)"
+      source: "Fotocasa Décembre 2025 (données approximatives)",
+      negotiationTarget: "8-12%",
+      negotiationArgs: [
+        "San Antón a une TRÈS FAIBLE offre: seulement 59 propriétés en vente (vs 204 à Campoamor). Peu de comparables = plus de pouvoir de négociation.",
+        "Seulement 17 propriétés en location. Les données de loyers sont APPROXIMATIVES (Fotocasa utilise Centro). Cela crée une incertitude sur le rendement réel.",
+        "Le rendement (5,6%) est égal à Campoamor, mais vous payez 26% plus cher (2.977 vs 2.357 €/m²). C'est une mauvaise affaire.",
+        "La croissance (+11-20%) est INFÉRIEURE à la moyenne (+15-18%). San Antón n'est pas un quartier en forte dynamique."
+      ]
     }
   };
 
@@ -149,7 +176,9 @@ export default function HomePage() {
                     ? "border-amber-700 bg-amber-50"
                     : neighborhood.color === "rose"
                     ? "border-rose-700 bg-rose-50"
-                    : "border-blue-700 bg-blue-50"
+                    : neighborhood.color === "blue"
+                    ? "border-blue-700 bg-blue-50"
+                    : "border-slate-700 bg-slate-50"
                   : "border-gray-200 bg-white hover:border-gray-300"
               }`}
             >
@@ -234,7 +263,7 @@ export default function HomePage() {
             </p>
             <div className="space-y-4">
               <div className="flex gap-4">
-                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : current.color === 'rose' ? 'bg-rose-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
+                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : current.color === 'rose' ? 'bg-rose-100' : current.color === 'blue' ? 'bg-blue-100' : 'bg-slate-100'} flex items-center justify-center flex-shrink-0`}>
                   <span className={`${current.accentColor} font-bold`}>1</span>
                 </div>
                 <div>
@@ -243,7 +272,7 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : current.color === 'rose' ? 'bg-rose-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
+                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : current.color === 'rose' ? 'bg-rose-100' : current.color === 'blue' ? 'bg-blue-100' : 'bg-slate-100'} flex items-center justify-center flex-shrink-0`}>
                   <span className={`${current.accentColor} font-bold`}>2</span>
                 </div>
                 <div>
@@ -252,7 +281,7 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : current.color === 'rose' ? 'bg-rose-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
+                <div className={`w-12 h-12 rounded-full ${current.color === 'amber' ? 'bg-amber-100' : current.color === 'rose' ? 'bg-rose-100' : current.color === 'blue' ? 'bg-blue-100' : 'bg-slate-100'} flex items-center justify-center flex-shrink-0`}>
                   <span className={`${current.accentColor} font-bold`}>3</span>
                 </div>
                 <div>
@@ -437,6 +466,56 @@ export default function HomePage() {
       {/* Divider */}
       <div className="h-px bg-gradient-to-r from-transparent via-amber-700 to-transparent my-16"></div>
 
+      {/* Negotiation Arguments */}
+      <section className="container py-16">
+        <h3 className="text-4xl font-bold text-gray-900 mb-6">Argumentaire de Négociation</h3>
+        <p className="text-lg text-gray-700 mb-12 leading-relaxed">
+          Utilisez ces arguments basés sur les données de marché pour négocier un meilleur prix avec le vendeur.
+        </p>
+
+        <div className={`p-8 bg-white border-l-4 ${current.colorClass} rounded-lg mb-8`}>
+          <h4 className="text-2xl font-bold text-gray-900 mb-4">{current.name}</h4>
+          <div className="space-y-4 mb-6">
+            {(current.negotiationArgs as string[]).map((arg, idx) => (
+              <div key={idx} className="flex gap-3">
+                <CheckCircle className={`w-5 h-5 ${current.accentColor} flex-shrink-0 mt-0.5`} />
+                <p className="text-gray-700">{arg}</p>
+              </div>
+            ))}
+          </div>
+          <div className={`p-4 ${current.colorClass} rounded-lg`}>
+            <p className={`font-bold ${current.accentColor}`}>Réduction cible: {(current.negotiationTarget as string)}</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="p-6 bg-amber-50 border-l-4 border-l-amber-700 rounded-lg">
+            <h5 className="font-bold text-gray-900 mb-3">Tactiques Universelles</h5>
+            <ul className="space-y-2 text-sm text-gray-700">
+              <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-amber-700 flex-shrink-0" /> Utiliser la moyenne comme référence</li>
+              <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-amber-700 flex-shrink-0" /> Comparer les rendements (pas seulement prix)</li>
+              <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-amber-700 flex-shrink-0" /> Utiliser la croissance comme argument</li>
+              <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-amber-700 flex-shrink-0" /> Mettre l'accent sur les comparables</li>
+              <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-amber-700 flex-shrink-0" /> Proposer paiement rapide/comptant</li>
+            </ul>
+          </div>
+
+          <div className="p-6 bg-rose-50 border-l-4 border-l-rose-700 rounded-lg">
+            <h5 className="font-bold text-gray-900 mb-3">Erreurs à Éviter</h5>
+            <ul className="space-y-2 text-sm text-gray-700">
+              <li className="flex gap-2"><span className="text-rose-700 font-bold">✕</span> Ne pas négocier sur le prix seul</li>
+              <li className="flex gap-2"><span className="text-rose-700 font-bold">✕</span> Ignorer la liquidité du marché</li>
+              <li className="flex gap-2"><span className="text-rose-700 font-bold">✕</span> Oublier les coûts additionnels</li>
+              <li className="flex gap-2"><span className="text-rose-700 font-bold">✕</span> Accepter données approximatives</li>
+              <li className="flex gap-2"><span className="text-rose-700 font-bold">✕</span> Négliger l'inspection approfondie</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-amber-700 to-transparent my-16"></div>
+
       {/* Apartment Showcase */}
       <section className="container py-16">
         <h3 className="text-4xl font-bold text-gray-900 mb-12">
@@ -524,11 +603,11 @@ export default function HomePage() {
           <div className="bg-amber-50 border-l-4 border-l-amber-700 p-8 rounded-lg mb-8">
             <p className="text-gray-900 font-accent mb-4">Points Clés pour {current.name}</p>
             <ul className="text-left space-y-2 text-gray-700">
-              <li>✓ Coût mensuel {current.monthlyRent > current.monthlyBuyCost ? 'inférieur' : 'comparable'} de {Math.abs(current.monthlyRent - current.monthlyBuyCost)} € comparé à la location</li>
-              <li>✓ Création de ~45-50 000 € de patrimoine net en 10 ans</li>
-              <li>✓ Rendement locatif brut attractif de {current.rentalYield}%</li>
-              <li>✓ Quartier en croissance avec appréciation de {current.growth}</li>
-              <li>✓ Marché {current.marketTemp} avec forte liquidité</li>
+              <li className="flex gap-2"><CheckCircle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" /> Coût mensuel {current.monthlyRent > current.monthlyBuyCost ? 'inférieur' : 'comparable'} de {Math.abs(current.monthlyRent - current.monthlyBuyCost)} € comparé à la location</li>
+              <li className="flex gap-2"><CheckCircle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" /> Création de ~45-50 000 € de patrimoine net en 10 ans</li>
+              <li className="flex gap-2"><CheckCircle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" /> Rendement locatif brut attractif de {current.rentalYield}%</li>
+              <li className="flex gap-2"><CheckCircle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" /> Quartier en croissance avec appréciation de {current.growth}</li>
+              <li className="flex gap-2"><CheckCircle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" /> Marché {current.marketTemp} avec forte liquidité</li>
             </ul>
           </div>
 
@@ -561,5 +640,13 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+function Button({ children, variant = "default", className = "" }: { children: React.ReactNode; variant?: string; className?: string }) {
+  return (
+    <button className={`px-4 py-2 rounded-lg font-medium transition-colors ${className}`}>
+      {children}
+    </button>
   );
 }
