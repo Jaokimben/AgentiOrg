@@ -3,9 +3,28 @@ import { ArrowRight, TrendingUp, Home, DollarSign, PieChart, BarChart3, MapPin, 
 import { useState } from "react";
 
 export default function HomePage() {
-  const [selectedNeighborhood, setSelectedNeighborhood] = useState("campoamor");
+  const [selectedNeighborhood, setSelectedNeighborhood] = useState("moyenne");
 
   const neighborhoods = {
+    moyenne: {
+      name: "Moyenne Alicante",
+      pricePerM2: 2509,
+      rentPerM2: 13,
+      description: "Moyenne de tous les quartiers d'Alicante - Référence pour comparaison",
+      color: "slate",
+      colorClass: "bg-slate-50 border-l-slate-700",
+      accentColor: "text-slate-700",
+      buyPrice: 175630,
+      monthlyBuyCost: 590,
+      monthlyRent: 910,
+      rentalYield: 6.2,
+      growth: "+15-18% (1 an)",
+      prestige: "Mixte",
+      marketTemp: "Chaud",
+      properties: 1200,
+      rentProperties: 450,
+      source: "Idealista Novembre 2025"
+    },
     campoamor: {
       name: "Campoamor",
       pricePerM2: 2357,
@@ -119,7 +138,7 @@ export default function HomePage() {
       {/* Neighborhood Selector */}
       <section className="container py-12 border-b border-gray-200">
         <h3 className="text-2xl font-bold text-gray-900 mb-6">Sélectionnez un Quartier</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {Object.entries(neighborhoods).map(([key, neighborhood]) => (
             <button
               key={key}
@@ -150,6 +169,9 @@ export default function HomePage() {
       {/* Key Metrics */}
       <section className="container py-16">
         <h3 className="text-2xl font-bold text-gray-900 mb-8">Métriques Clés - {current.name}</h3>
+        <div className="text-sm text-gray-600 mb-6 p-4 bg-gray-50 rounded-lg">
+          <p><strong>Source:</strong> {current.source} | <strong>Propriétés:</strong> {current.properties} en vente, {current.rentProperties} en location</p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className={`p-6 border-l-4 ${current.colorClass} bg-white rounded-lg shadow-sm`}>
             <div className="flex items-start justify-between">
@@ -342,6 +364,7 @@ export default function HomePage() {
             <thead>
               <tr className="bg-gray-100 border-b-2 border-gray-300">
                 <th className="p-4 text-left font-bold text-gray-900">Critère</th>
+                <th className="p-4 text-center font-bold text-slate-700">Moyenne</th>
                 <th className="p-4 text-center font-bold text-amber-700">Campoamor</th>
                 <th className="p-4 text-center font-bold text-rose-700">Mercado</th>
                 <th className="p-4 text-center font-bold text-blue-700">San Antón</th>
@@ -350,42 +373,49 @@ export default function HomePage() {
             <tbody>
               <tr className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4 text-gray-700">Prix Achat (€/m²)</td>
+                <td className="p-4 text-center font-bold text-slate-900">2.509 €</td>
                 <td className="p-4 text-center font-bold text-gray-900">2.357 €</td>
                 <td className="p-4 text-center font-bold text-gray-900">3.055 €</td>
                 <td className="p-4 text-center font-bold text-gray-900">2.977 €</td>
               </tr>
               <tr className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4 text-gray-700">Loyer (€/m²)</td>
+                <td className="p-4 text-center font-bold text-slate-900">13,0 €</td>
                 <td className="p-4 text-center font-bold text-gray-900">11 €</td>
-                <td className="p-4 text-center font-bold text-gray-900">11 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">14 €</td>
                 <td className="p-4 text-center font-bold text-gray-900">14 €</td>
               </tr>
               <tr className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4 text-gray-700">Coût Mensuel Achat</td>
+                <td className="p-4 text-center font-bold text-slate-700">590 €</td>
                 <td className="p-4 text-center font-bold text-amber-700">545 €</td>
                 <td className="p-4 text-center font-bold text-rose-700">675 €</td>
                 <td className="p-4 text-center font-bold text-blue-700">660 €</td>
               </tr>
               <tr className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4 text-gray-700">Loyer Mensuel</td>
+                <td className="p-4 text-center font-bold text-slate-900">910 €</td>
                 <td className="p-4 text-center font-bold text-gray-900">770 €</td>
-                <td className="p-4 text-center font-bold text-gray-900">770 €</td>
+                <td className="p-4 text-center font-bold text-gray-900">980 €</td>
                 <td className="p-4 text-center font-bold text-gray-900">980 €</td>
               </tr>
               <tr className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4 text-gray-700">Rendement Locatif</td>
+                <td className="p-4 text-center font-bold text-slate-900">6,2%</td>
                 <td className="p-4 text-center font-bold text-gray-900">5,6%</td>
-                <td className="p-4 text-center font-bold text-gray-900">4,3%</td>
+                <td className="p-4 text-center font-bold text-gray-900">5,5%</td>
                 <td className="p-4 text-center font-bold text-gray-900">5,6%</td>
               </tr>
               <tr className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="p-4 text-gray-700">Prestige</td>
+                <td className="p-4 text-center font-bold text-slate-900">Mixte</td>
                 <td className="p-4 text-center font-bold text-gray-900">Élevé</td>
                 <td className="p-4 text-center font-bold text-gray-900">Modéré-Élevé</td>
                 <td className="p-4 text-center font-bold text-gray-900">Modéré</td>
               </tr>
               <tr className="bg-gray-50">
                 <td className="p-4 text-gray-700 font-bold">Potentiel Croissance</td>
+                <td className="p-4 text-center font-bold text-slate-700">+15-18%</td>
                 <td className="p-4 text-center font-bold text-amber-700">+17-28%</td>
                 <td className="p-4 text-center font-bold text-rose-700">+8-17%</td>
                 <td className="p-4 text-center font-bold text-blue-700">+11-20%</td>
@@ -397,9 +427,10 @@ export default function HomePage() {
         <div className="mt-8 p-6 bg-blue-50 border-l-4 border-l-blue-700 rounded-lg">
           <p className="text-sm text-gray-600 mb-2 flex items-center gap-2">
             <Calendar className="w-4 h-4" />
-            <strong>Source des données:</strong> Fotocasa - Décembre 2025
+            <strong>Source des données:</strong> Fotocasa (quartiers) & Idealista (moyenne) - Décembre 2025
           </p>
-          <p className="text-sm text-gray-600">Les données sont basées sur les prix officiels du marché immobilier. Les calculs incluent un prêt hypothécaire à 3,5% TAE sur 25 ans avec un apport de 20%.</p>
+          <p className="text-sm text-gray-600 mb-2">Les données sont basées sur les prix officiels du marché immobilier. Les calculs incluent un prêt hypothécaire à 3,5% TAE sur 25 ans avec un apport de 20%.</p>
+          <p className="text-sm text-gray-600"><strong>Moyenne Alicante:</strong> Référence pour comparer les quartiers spécifiques. Campoamor est 6% moins cher que la moyenne, tandis que Mercado et San Antón sont respectivement 22% et 19% plus chers.</p>
         </div>
       </section>
 
@@ -426,7 +457,10 @@ export default function HomePage() {
               70 m² - 2-3 Chambres
             </h4>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              Un appartement typique de {current.name} offrant un excellent rapport qualité-prix. Design minimaliste Scandinavien avec accents méditerranéens, luminosité naturelle généreuse, et finitions modernes.
+              {current.name === "Moyenne Alicante" 
+                ? "Représentation moyenne des appartements à Alicante. Les quartiers spécifiques offrent des caractéristiques et prestige différents."
+                : `Un appartement typique de ${current.name} offrant un excellent rapport qualité-prix. Design minimaliste Scandinavien avec accents méditerranéens, luminosité naturelle généreuse, et finitions modernes.`
+              }
             </p>
 
             <div className="space-y-6">
