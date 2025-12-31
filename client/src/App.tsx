@@ -11,6 +11,7 @@ import Contact from "./pages/Contact";
 import SectorComparisonPage from "./pages/SectorComparisonPage";
 import About from "./pages/About";
 import MAOPage from "./pages/MAOPage";
+import QuizPage from "./pages/QuizPage";
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/mao" component={MAOPage} />
+      <Route path="/quiz" component={QuizPage} />
       <Route path="/evaluation" component={Assessment} />
       <Route path="/comparison" component={SectorComparisonPage} />
       <Route path="/contact" component={Contact} />
