@@ -80,6 +80,8 @@ function HeroSection() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-6 leading-tight">
             {t("hero.title1")}{" "}
             <span className="text-gradient">{t("hero.title2")}</span>
+            <br />
+            <span className="text-2xl md:text-3xl lg:text-4xl text-muted-foreground">{t("hero.subtitle")}</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
             {t("hero.description")}
@@ -404,6 +406,7 @@ function ConceptsSection() {
       id: "AO",
       titleKey: "concepts.ao.title",
       descriptionKey: "concepts.ao.description",
+      plainKey: "concepts.ao.plain",
       icon: Building2,
       levelKey: "concepts.level.strategic"
     },
@@ -411,6 +414,7 @@ function ConceptsSection() {
       id: "AT",
       titleKey: "concepts.at.title",
       descriptionKey: "concepts.at.description",
+      plainKey: "concepts.at.plain",
       icon: Users,
       levelKey: "concepts.level.network"
     },
@@ -418,6 +422,7 @@ function ConceptsSection() {
       id: "AMO",
       titleKey: "concepts.amo.title",
       descriptionKey: "concepts.amo.description",
+      plainKey: "concepts.amo.plain",
       icon: Layers,
       levelKey: "concepts.level.agent"
     },
@@ -425,6 +430,7 @@ function ConceptsSection() {
       id: "SAIFE",
       titleKey: "concepts.saife.title",
       descriptionKey: "concepts.saife.description",
+      plainKey: "concepts.saife.plain",
       icon: Shield,
       levelKey: "concepts.level.strategic"
     },
@@ -432,6 +438,7 @@ function ConceptsSection() {
       id: "HS",
       titleKey: "concepts.hs.title",
       descriptionKey: "concepts.hs.description",
+      plainKey: "concepts.hs.plain",
       icon: Brain,
       levelKey: "concepts.level.agent"
     },
@@ -439,6 +446,7 @@ function ConceptsSection() {
       id: "MAO",
       titleKey: "concepts.mao.title",
       descriptionKey: "concepts.mao.description",
+      plainKey: "concepts.mao.plain",
       icon: Target,
       levelKey: "concepts.level.network"
     }
@@ -473,9 +481,14 @@ function ConceptsSection() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
+                <CardDescription className="text-base mb-3">
                   {t(concept.descriptionKey)}
                 </CardDescription>
+                <div className="mt-3 p-3 bg-accent/10 rounded-lg border border-accent/20">
+                  <p className="text-sm text-foreground font-medium italic">
+                    {t(concept.plainKey)}
+                  </p>
+                </div>
               </CardContent>
             </Card>
           ))}
@@ -494,6 +507,7 @@ function GovernanceSection() {
       level: t("concepts.level.strategic"),
       titleKey: "governance.strategic.title",
       descriptionKey: "governance.strategic.description",
+      exampleKey: "governance.strategic.example",
       items: [
         "governance.strategic.item1",
         "governance.strategic.item2",
@@ -505,6 +519,7 @@ function GovernanceSection() {
       level: t("concepts.level.network"),
       titleKey: "governance.network.title",
       descriptionKey: "governance.network.description",
+      exampleKey: "governance.network.example",
       items: [
         "governance.network.item1",
         "governance.network.item2",
@@ -516,6 +531,7 @@ function GovernanceSection() {
       level: t("concepts.level.agent"),
       titleKey: "governance.agent.title",
       descriptionKey: "governance.agent.description",
+      exampleKey: "governance.agent.example",
       items: [
         "governance.agent.item1",
         "governance.agent.item2",
@@ -551,7 +567,7 @@ function GovernanceSection() {
                   </div>
                 </div>
                 <p className="text-muted-foreground mb-6">{t(gov.descriptionKey)}</p>
-                <ul className="space-y-3">
+                <ul className="space-y-3 mb-4">
                   {gov.items.map((item) => (
                     <li key={item} className="flex items-start gap-2">
                       <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
@@ -559,6 +575,12 @@ function GovernanceSection() {
                     </li>
                   ))}
                 </ul>
+                <div className="mt-4 p-4 bg-accent/10 rounded-lg border border-accent/20">
+                  <p className="text-sm text-foreground italic">
+                    <Lightbulb className="w-4 h-4 inline mr-2 text-accent" />
+                    {t(gov.exampleKey)}
+                  </p>
+                </div>
               </div>
               {index < governanceLevels.length - 1 && (
                 <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
@@ -797,17 +819,20 @@ function CollaborationSection() {
               <div className="text-center p-6 bg-primary/5 rounded-lg border-2 border-primary/20">
                 <div className="text-2xl font-bold text-primary mb-2">{t("collaboration.humanLed")}</div>
                 <div className="text-4xl font-bold text-accent mb-2">40%</div>
-                <p className="text-sm text-muted-foreground">{t("collaboration.humanLed.description")}</p>
+                <p className="text-sm text-muted-foreground mb-2">{t("collaboration.humanLed.description")}</p>
+                <p className="text-xs text-foreground italic bg-white/50 p-2 rounded">{t("collaboration.humanLed.example")}</p>
               </div>
               <div className="text-center p-6 bg-accent/10 rounded-lg border-2 border-accent/30">
                 <div className="text-2xl font-bold text-primary mb-2">{t("collaboration.peerToPeer")}</div>
                 <div className="text-4xl font-bold text-accent mb-2">35%</div>
-                <p className="text-sm text-muted-foreground">{t("collaboration.peerToPeer.description")}</p>
+                <p className="text-sm text-muted-foreground mb-2">{t("collaboration.peerToPeer.description")}</p>
+                <p className="text-xs text-foreground italic bg-white/50 p-2 rounded">{t("collaboration.peerToPeer.example")}</p>
               </div>
               <div className="text-center p-6 bg-muted rounded-lg border-2 border-border">
                 <div className="text-2xl font-bold text-primary mb-2">{t("collaboration.aiLed")}</div>
                 <div className="text-4xl font-bold text-accent mb-2">25%</div>
-                <p className="text-sm text-muted-foreground">{t("collaboration.aiLed.description")}</p>
+                <p className="text-sm text-muted-foreground mb-2">{t("collaboration.aiLed.description")}</p>
+                <p className="text-xs text-foreground italic bg-white/50 p-2 rounded">{t("collaboration.aiLed.example")}</p>
               </div>
             </div>
           </div>
